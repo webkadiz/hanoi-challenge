@@ -1,0 +1,48 @@
+$base-color: #594306;
+$ring-color: #2b3bed;
+
+* {
+	box-sizing: border-box;
+}
+
+body, html {
+	margin: 0;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.box {
+	position: relative;
+	width: 75%;
+	height: 75%;
+}
+
+.field {
+	position: relative;
+	height: 85%;
+}
+
+.floor {
+	background: $base-color;
+	height: 15%;
+	width: 100%;
+}
+
+.rod {
+	position: absolute;
+	background: $base-color;
+	width: 25px;
+	height: 80%;
+	bottom: 0;
+}
+
+.ring {
+	position: absolute;
+	border-radius: 50px;
+	background: $ring-color;
+	border: 1px solid black;
+	border-bottom: none
+}
