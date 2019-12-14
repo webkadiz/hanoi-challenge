@@ -5,7 +5,7 @@ import '@modules/init'
 import { range, print, float } from '@modules/utils'
 
 
-const amountRings = 4
+const amountRings = 3
 const baseWidthRing = 100 // px
 const baseHeightRing = 25 // px
 const increaseWidthRing = 40 // px
@@ -24,10 +24,18 @@ for (const i of range(3)) {
 	topRings[i] = Array(amountRings).fill(0)
 }
 
-
 const floor = $('.floor')
 const rods = $('.rod')
 const field = $('.field')
+
+const score = $('.score')
+const bestScore = $('.best-score')
+
+
+let rememberRodIndex = 0
+
+bestScore.text(2 ** amountRings - 1)
+score.text(0)
 
 let activeRing
 
@@ -64,9 +72,6 @@ class Ring {
 		})
 	}
 
-	completeAnim() {
-		this.isInAnim = false
-	}
 
 	get left() {
 		return float(this.css('left'))
@@ -160,6 +165,12 @@ function initGameMap() {
 }
 
 
+function increaseScore() {
+	if (rodIndex !== rememberRodIndex) {
+		score.text(Number(score.text()) + 1)
+	}
+}
+
 $(window).on('keyup', e => {
 	const UP = e.key === 'w' || e.key === 'ArrowUp'
 	const RIGHT = e.key === 'd' || e.key === 'ArrowRight'
@@ -177,6 +188,8 @@ $(window).on('keyup', e => {
 			topRings[rodIndex].shiftLeft()
 
 			activeRing.get().animate({'bottom': field.height() - baseHeightRing})
+
+			rememberRodIndex = rodIndex
 		}
 	} else if (DOWN) {
 		let topRing = topRings[rodIndex][0]
@@ -189,7 +202,7 @@ $(window).on('keyup', e => {
 					topRings[rodIndex].shiftRight()
 					topRings[rodIndex][0] = activeRing.get()
 					activeRing.unset()
-
+					increaseScore()
 				} else {
 
 				}
@@ -198,6 +211,7 @@ $(window).on('keyup', e => {
 				activeRing.get().animate({'bottom': 0})
 				topRings[rodIndex][0] = activeRing.get()
 				activeRing.unset()
+				increaseScore()
 
 			}
 		}
@@ -217,7 +231,7 @@ $(window).on('keyup', e => {
 
 		}
 
-		rodIndex = rodIndex == 2 ? 2 : rodIndex + 1
+		rodIndex = rodIndex === 2 ? 2 : rodIndex + 1
 	} else if (LEFT) {
 
 		if (activeRing.exists()) {
@@ -231,7 +245,7 @@ $(window).on('keyup', e => {
 			}
 		}
 
-		rodIndex = rodIndex == 0 ? 0 : rodIndex - 1		
+		rodIndex = rodIndex === 0 ? 0 : rodIndex - 1		
 	}
 
 })

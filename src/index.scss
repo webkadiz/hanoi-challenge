@@ -46,3 +46,14 @@ body, html {
 	border: 1px solid black;
 	border-bottom: none
 }
+
+.score, .best-score {
+	position: absolute;
+	right: 40px;
+	top: 40px;
+	font-size: 20px;
+}
+
+.best-score {
+	top: 80px;
+}
