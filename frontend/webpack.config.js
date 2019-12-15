@@ -1,9 +1,12 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-	entry: './src/index.js',
+	entry: {
+		'first-stage': './src/first-stage/first-stage.js',
+		'last-stage': './src/last-stage/last-stage.js'
+	},
 	output: {
-		filename: 'bundle.js',
+		filename: '[name].js',
 		path: __dirname + '/dist/'
 	},
 
@@ -32,12 +35,19 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: './src/index.html'
+			template: './src/first-stage/first-stage.html',
+			filename: 'first-stage.html',
+			chunks: ['first-stage']
+		}),
+		new HtmlWebpackPlugin({
+			template: './src/last-stage/last-stage.html',
+			filename: 'last-stage.html',
+			chunks: ['last-stage']
 		})
 	],
 	resolve: {
 		alias: {
-			'@modules': __dirname + '/src/modules'
+			'@': __dirname + '/src'
 		}
 	},
 	devServer: {

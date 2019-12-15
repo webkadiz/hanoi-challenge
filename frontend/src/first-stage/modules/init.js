@@ -1,4 +1,4 @@
-import { range } from '@modules/utils'
+import { range } from '@/common/utils'
 
 Object.defineProperty(Array.prototype, 'shiftLeft', {
 	value() {

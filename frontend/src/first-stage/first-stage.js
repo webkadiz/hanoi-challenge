@@ -1,8 +1,39 @@
-import './index.scss'
+import './first-stage.scss'
 import $ from 'jquery'
 
-import '@modules/init'
-import { range, print, float } from '@modules/utils'
+import './modules/init'
+import socket from './modules/websocket-first-stage'
+import { range, print, float } from '@/common/utils'
+
+
+
+
+navigator.mediaDevices.getDisplayMedia({ video: true })
+	.then(stream => {
+		var vid = document.createElement("video")
+		vid.srcObject = stream
+		console.log(stream)
+		document.body.appendChild(vid)
+
+		vid.play()
+
+		const recorder = new MediaRecorder(stream)
+		
+		recorder.ondataavailable = e => {
+			console.log(e.data)
+			socket.send(e.data)
+		}
+
+		recorder.start(1000)
+		console.log(recorder)
+	})
+	.catch(err => console.log(err))
+
+	//video/webm;codecs=vp8
+
+
+
+
 
 
 const amountRings = 3
