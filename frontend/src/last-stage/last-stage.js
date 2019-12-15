@@ -3,7 +3,26 @@ import socket from './modules/websocket-last-stage'
 console.log(123)
 
 
+const mimeCodec = 'video/webm;codecs=vp8'
+
 const videoElems = document.querySelectorAll('video')
+const videoElem = videoElems[0]
+
+const mediaSource = new MediaSource();
+  //console.log(mediaSource.readyState); // closed
+videoElem.src = URL.createObjectURL(mediaSource);
+
+videoElem.play()
+
+let sourceBuffer
+
+mediaSource.addEventListener('sourceopen', () => {
+	sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
+})
+
+
+ 
+
 
 // обработчик входящих сообщений
 socket.onmessage = function(event) {
@@ -31,15 +50,20 @@ function handleIncomingData(incomingData) {
 
 		console.log(arrayBuffer)
 
-		const blob = new Blob(arrayBuffer, { type })
 
-		console.log(blob)
 
-		videoElems[clientIndex].srcObject = blob
 
-		videoElems[clientIndex].play()
+		sourceBuffer.appendBuffer(arrayBuffer)
+
+
+		console.log(sourceBuffer)
+
+
+//		videoElems[clientIndex].play()
   }
 }
+
+
 
 
 
