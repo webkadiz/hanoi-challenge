@@ -6,17 +6,39 @@ import socket from './modules/websocket-first-stage'
 import { range, print, float } from '@/common/utils'
 
 
+socket.onopen = () => {
+	console.log('open')
+	socket.send(JSON.stringify({
+		create: true
+	}))
+}
+
+
+socket.onmessage = socket.onmessage = event => {
+	console.log(event)
+	let incomingData
+
+	try {
+		incomingData = JSON.parse(event.data)
+	} catch(e) {
+		incomingData = event.data
+	}
+
+  handleIncomingData(incomingData)
+}
+
+
+function handleIncomingData(incomingData) {
+	if (incomingData.reload) {
+		location.reload()
+	}
+}
+
+
 
 
 navigator.mediaDevices.getDisplayMedia({ video: true })
 	.then(stream => {
-		var vid = document.createElement("video")
-		vid.srcObject = stream
-		console.log(stream)
-		document.body.appendChild(vid)
-
-		vid.play()
-
 		const recorder = new MediaRecorder(stream)
 		
 		recorder.ondataavailable = e => {

@@ -12,7 +12,6 @@ const timerSocket = new WebSocket.Server({ noServer: true })
 let lastStageClient
 let firstStageClients = Array(4).fill(null)
 let webSocketKeyTable = {}
-id = 0
 
 
 firstStageSocket.on('headers', (headers, req) => {
@@ -58,8 +57,18 @@ firstStageSocket.on('connection', function connection(ws, req) {
         type: 'video/webm;codecs=vp8'
       })
 
-      lastStageClient.send(data)
+      lastStageClient && lastStageClient.send(data)
+      return
     }
+
+    const messageParsed = JSON.parse(message)
+
+    const data = JSON.stringify({
+      clientIndex,
+      data: messageParsed
+    })
+
+    lastStageClient && lastStageClient.send(data)
   })
 
   ws.on('close', () => {
@@ -67,8 +76,6 @@ firstStageSocket.on('connection', function connection(ws, req) {
     if (clientIndex !== undefined)
       firstStageClients[clientIndex] = null
 
-    console.log(firstStageClients.filter(Boolean).length)
-    console.log(firstStageSocket.clients.size)
   })
 })
  
@@ -76,6 +83,12 @@ lastStageSocket.on('connection', function connection(ws) {
 
   lastStageClient = ws
   console.log('connect last stage client')
+
+  for (const firstStageClient of firstStageClients) {
+    firstStageClient && firstStageClient.send(JSON.stringify({
+      reload: true
+    }))
+  }
 
   lastStageClient.on('message', message => {
     console.log('get message from last stage client', message)

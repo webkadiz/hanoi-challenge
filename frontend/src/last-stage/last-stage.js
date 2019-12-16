@@ -5,30 +5,13 @@ import socket from './modules/websocket-last-stage'
 console.log(123)
 
 
+const mediaSourceArray = Array(4).fill(null)
+const sourceBufferArray = Array(4).fill(null)
+
 const mimeCodec = 'video/webm;codecs=vp8'
-const queue = []
+const queueArray = Array(4).fill(null)
+
 const videoElems = document.querySelectorAll('video')
-const videoElem = videoElems[0]
-
-const mediaSource = new MediaSource();
-  //console.log(mediaSource.readyState); // closed
-videoElem.src = URL.createObjectURL(mediaSource);
-
-videoElem.play()
-
-let sourceBuffer
-
-mediaSource.addEventListener('sourceopen', () => {
-	sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
-
-	sourceBuffer.addEventListener('updateend', () => {
-		if (queue.length > 0 && !sourceBuffer.updating) {
-      		sourceBuffer.appendBuffer(queue.shift());
-    	}
-	})
-})
-
-
  
 
 
@@ -43,47 +26,88 @@ socket.onmessage = function(event) {
 		incomingData = event.data
 	}
 
-  handleIncomingData(incomingData);
-};
+  handleIncomingData(incomingData)
+}
 
 
 function handleIncomingData(incomingData) {
 
+	console.log(incomingData)
+
   if (incomingData.buffer) {
-		console.log(incomingData)
-		const { buffer, clientIndex, type } = incomingData
-		console.log(buffer)
+
+  		appendBuffer(incomingData.buffer, incomingData.clientIndex)
 		
-		const arrayBuffer = toArrayBuffer(buffer.data)
-
-		console.log(arrayBuffer)
-			
-		console.log(sourceBuffer.updating, mediaSource.readyState != "open")
-		if (sourceBuffer.updating || mediaSource.readyState != "open" || queue.length > 0) {
-			queue.push(arrayBuffer);
-		} else {
-			console.log('append buffer')
-			sourceBuffer.appendBuffer(arrayBuffer)
-		}
-
-		console.log(sourceBuffer)
 
 
-//		videoElems[clientIndex].play()
+
+
+  } else if(incomingData.data.create) {
+  	console.log('create media')
+  	createMediaSource(incomingData.clientIndex)
   }
+
+
+}
+
+
+function createMediaSource(clientIndex) {
+	const videoElem = videoElems[clientIndex]
+	const mediaSource = new MediaSource()
+	const queue = []
+
+	mediaSourceArray[clientIndex] = mediaSource
+	queueArray[clientIndex] = queue
+
+	videoElem.src = URL.createObjectURL(mediaSource)
+
+
+	mediaSource.addEventListener('sourceopen', () => {
+		console.log('source open')
+		const sourceBuffer = mediaSource.addSourceBuffer(mimeCodec)
+		sourceBufferArray[clientIndex] = sourceBuffer
+
+		sourceBuffer.addEventListener('updateend', () => {
+			if (queue.length > 0 && !sourceBuffer.updating) {
+      			sourceBuffer.appendBuffer(queue.shift());
+    		}
+		})
+
+		videoElem.play()
+	})
+
+}
+
+
+function appendBuffer(buf, clientIndex) {
+
+	const arrayBuffer = toArrayBuffer(buf.data)
+	const sourceBuffer = sourceBufferArray[clientIndex]
+	const mediaSource = mediaSourceArray[clientIndex]
+	const queue = queueArray[clientIndex]
+
+	
+	console.log(sourceBuffer.updating, mediaSource.readyState != "open", queue.length > 0)
+	
+	if (sourceBuffer.updating || mediaSource.readyState != "open" || queue.length > 0) {
+		queue.push(arrayBuffer)
+	} else {
+		sourceBuffer.appendBuffer(arrayBuffer)
+	}
+	
+
 }
 
 
 
 
-
 function toArrayBuffer(buf) {
-	var ab = new ArrayBuffer(buf.length);
-	var view = new Uint8Array(ab);
+	const ab = new ArrayBuffer(buf.length)
+	const view = new Uint8Array(ab)
 	for (var i = 0; i < buf.length; ++i) {
-			view[i] = buf[i];
+			view[i] = buf[i]
 	}
-	return ab;
+	return ab
 }
 
 
