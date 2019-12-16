@@ -86,10 +86,17 @@ lastStageSocket.on('connection', function connection(ws) {
 timerSocket.on('connection', function connection(ws) {
   // ...
 })
- 
+
+
+server.on('request', () => {
+  console.log('request')
+})
+
 server.on('upgrade', function upgrade(request, socket, head) {
   const pathname = url.parse(request.url).pathname
   
+
+  console.log(pathname)
 
   if (pathname === '/first-stage') {
     firstStageSocket.handleUpgrade(request, socket, head, function done(ws) {
