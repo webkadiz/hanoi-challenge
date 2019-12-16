@@ -1,8 +1,6 @@
 const http = require('http')
 const WebSocket = require('ws')
 const url = require('url')
-const express = require('express')
-const app = express()
 const cookie = require('cookie')
  
 const server = http.createServer()

@@ -1,10 +1,12 @@
+
+import './last-stage.scss'
 import $ from 'jquery'
 import socket from './modules/websocket-last-stage'
 console.log(123)
 
 
 const mimeCodec = 'video/webm;codecs=vp8'
-
+const queue = []
 const videoElems = document.querySelectorAll('video')
 const videoElem = videoElems[0]
 
@@ -18,6 +20,12 @@ let sourceBuffer
 
 mediaSource.addEventListener('sourceopen', () => {
 	sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
+
+	sourceBuffer.addEventListener('updateend', () => {
+		if (queue.length > 0 && !sourceBuffer.updating) {
+      		sourceBuffer.appendBuffer(queue.shift());
+    	}
+	})
 })
 
 
@@ -38,7 +46,7 @@ socket.onmessage = function(event) {
   handleIncomingData(incomingData);
 };
 
-// показать сообщение в div#subscribe
+
 function handleIncomingData(incomingData) {
 
   if (incomingData.buffer) {
@@ -49,12 +57,14 @@ function handleIncomingData(incomingData) {
 		const arrayBuffer = toArrayBuffer(buffer.data)
 
 		console.log(arrayBuffer)
-
-
-
-
-		sourceBuffer.appendBuffer(arrayBuffer)
-
+			
+		console.log(sourceBuffer.updating, mediaSource.readyState != "open")
+		if (sourceBuffer.updating || mediaSource.readyState != "open" || queue.length > 0) {
+			queue.push(arrayBuffer);
+		} else {
+			console.log('append buffer')
+			sourceBuffer.appendBuffer(arrayBuffer)
+		}
 
 		console.log(sourceBuffer)
 

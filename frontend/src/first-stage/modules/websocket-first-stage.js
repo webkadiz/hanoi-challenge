@@ -1,6 +1,8 @@
 import $ from 'jquery'
+import { WEBSOCKET_SERVER_URL } from '@/common/constants'
 
-const socket = new WebSocket("ws://localhost:8081/first-stage");
+
+const socket = new WebSocket(`${WEBSOCKET_SERVER_URL}/first-stage`);
 
 // обработчик входящих сообщений
 socket.onmessage = function(event) {

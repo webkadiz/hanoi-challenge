@@ -10,5 +10,11 @@ html, body {
   display: grid;
 
   grid-template-columns: 1fr 1fr;
-  grid-auto-flow: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  height: 100%;
+}
+
+video {
+	width: 100%;
+	height: 100%;
 }
