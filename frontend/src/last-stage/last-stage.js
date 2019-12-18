@@ -4,6 +4,9 @@ import $ from 'jquery'
 import socket from './modules/websocket-last-stage'
 console.log(123)
 
+import { range } from '@/common/utils'
+
+let gameScore = 5
 
 const mediaSourceArray = Array(4).fill(null)
 const sourceBufferArray = Array(4).fill(null)
@@ -13,7 +16,22 @@ const queueArray = Array(4).fill(null)
 
 const videoElems = document.querySelectorAll('video')
  
+const flipBtns = $('.flip-btn')
 
+flipBtns.fadeOut()
+
+const gameStates = Array(4).fill(-1)
+
+
+handleFirstStageGameOver('lose', 0)
+handleFirstStageGameOver('win', 1)
+handleFirstStageGameOver('win', 2)
+handleFirstStageGameOver('lose', 3)
+
+
+for (const i of range(4)) {
+	$('.last-stage-img').eq(i).css('background-image', `url(static/${i}.jpg)`)
+}
 
 // обработчик входящих сообщений
 socket.onmessage = function(event) {
@@ -36,19 +54,51 @@ function handleIncomingData(incomingData) {
 
   if (incomingData.buffer) {
 
-  		appendBuffer(incomingData.buffer, incomingData.clientIndex)
-		
-
-
-
+  	appendBuffer(incomingData.buffer, incomingData.clientIndex)	
 
   } else if(incomingData.data.create) {
-  	console.log('create media')
+  	
   	createMediaSource(incomingData.clientIndex)
+
+  } else if(incomingData.data.gameOver) {
+
+  	handleFirstStageGameOver(incomingData.data.gameOver, incomingData.clientIndex, incomingData.additionalScore)
+
   }
 
 
 }
+
+
+function appendBuffer(buf, clientIndex) {
+
+	const arrayBuffer = toArrayBuffer(buf.data)
+	const sourceBuffer = sourceBufferArray[clientIndex]
+	const mediaSource = mediaSourceArray[clientIndex]
+	const queue = queueArray[clientIndex]
+
+	
+	console.log(sourceBuffer.updating, mediaSource.readyState != "open", queue.length > 0)
+	
+	if (sourceBuffer.updating || mediaSource.readyState != "open" || queue.length > 0) {
+		queue.push(arrayBuffer)
+	} else {
+		sourceBuffer.appendBuffer(arrayBuffer)
+	}
+	
+
+}
+
+function toArrayBuffer(buf) {
+	const ab = new ArrayBuffer(buf.length)
+	const view = new Uint8Array(ab)
+	for (var i = 0; i < buf.length; ++i) {
+			view[i] = buf[i]
+	}
+	return ab
+}
+
+
 
 
 function createMediaSource(clientIndex) {
@@ -79,35 +129,29 @@ function createMediaSource(clientIndex) {
 }
 
 
-function appendBuffer(buf, clientIndex) {
+function handleFirstStageGameOver(result, clientIndex, additionalScore) {
 
-	const arrayBuffer = toArrayBuffer(buf.data)
-	const sourceBuffer = sourceBufferArray[clientIndex]
-	const mediaSource = mediaSourceArray[clientIndex]
-	const queue = queueArray[clientIndex]
+	gameScore += additionalScore
 
-	
-	console.log(sourceBuffer.updating, mediaSource.readyState != "open", queue.length > 0)
-	
-	if (sourceBuffer.updating || mediaSource.readyState != "open" || queue.length > 0) {
-		queue.push(arrayBuffer)
-	} else {
-		sourceBuffer.appendBuffer(arrayBuffer)
+	if (result === 'win') {
+		gameStates[clientIndex] = 1
+		flipBtns.eq(clientIndex).text('Перевернуть за 0 баллов')
+	} else if(result === 'lose') {
+		gameStates[clientIndex] = 0
+		flipBtns.eq(clientIndex).text('Перевернуть за 1 баллов')
 	}
-	
 
+	flipBtns.eq(clientIndex).fadeIn(1000)
+
+	flipBtns.eq(clientIndex).click(() => {
+		$('.card').eq(clientIndex).addClass('flip')
+		if (result === 'lose') gameScore--
+	})
 }
 
 
 
 
-function toArrayBuffer(buf) {
-	const ab = new ArrayBuffer(buf.length)
-	const view = new Uint8Array(ab)
-	for (var i = 0; i < buf.length; ++i) {
-			view[i] = buf[i]
-	}
-	return ab
-}
+
 
 

@@ -5,6 +5,10 @@ $ring-color: #2b3bed;
 	box-sizing: border-box;
 }
 
+html {
+	overflow: hidden;
+}
+
 body, html {
 	margin: 0;
 	height: 100%;
@@ -57,3 +61,45 @@ body, html {
 .best-score {
 	top: 80px;
 }
+
+
+.win, .lose {
+	i {
+		font-size: 4000%;
+	}
+}
+
+.win, .lose {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	pointer-events: none;
+	transform: scale(1.5);
+	transition: .3s;
+}
+
+
+.win.active, .lose.active {
+	opacity: 1;
+	transform: scale(1);
+}
+
+.win {
+	i {
+		color: green;
+	}
+}
+
+.lose {
+	i {
+		color: red;
+	}
+}
+
+

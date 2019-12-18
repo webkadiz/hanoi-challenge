@@ -29,8 +29,20 @@ socket.onmessage = socket.onmessage = event => {
 
 
 function handleIncomingData(incomingData) {
+	console.log(incomingData)
+
 	if (incomingData.reload) {
+
 		location.reload()
+	
+	} else if (incomingData.timer === 'start') {
+
+		startGame()
+			
+	} else if (incomingData.timer === 'stop') {
+
+		stopGame()
+
 	}
 }
 
@@ -224,6 +236,44 @@ function increaseScore() {
 	}
 }
 
+
+
+function winGame() {
+	let scoreNumber = Number(score.text())
+	let bestScoreNumber = Number(bestScore.text())
+	let additionalScore = 0
+
+
+	if (scoreNumber === bestScoreNumber) {
+		additionalScore++
+	}
+
+	$(window).off('keyup')
+
+	$('.win').addClass('active')
+	
+	socket.send(JSON.stringify({
+		gameOver: 'win',
+		additionalScore
+	}))
+
+
+}
+
+function loseGame() {
+	
+	$(window).off('keyup')
+
+	$('.lose').addClass('active')
+	
+	socket.send(JSON.stringify({
+		gameOver: 'lose',
+		additionalScore
+	}))
+
+}
+
+
 $(window).on('keyup', e => {
 	const UP = e.key === 'w' || e.key === 'ArrowUp'
 	const RIGHT = e.key === 'd' || e.key === 'ArrowRight'
@@ -246,27 +296,35 @@ $(window).on('keyup', e => {
 		}
 	} else if (DOWN) {
 		let topRing = topRings[rodIndex][0]
+		let doDown = false
 
 		if (activeRing.exists()) {
 			if (topRing) {
 				if (topRing.width > activeRing.get().width) {
 
+					doDown = true
 					activeRing.get().animate({'bottom': topRing.bottom + topRing.height})
 					topRings[rodIndex].shiftRight()
-					topRings[rodIndex][0] = activeRing.get()
-					activeRing.unset()
-					increaseScore()
+
 				} else {
 
 				}
 			} else {
 
+				doDown = true
 				activeRing.get().animate({'bottom': 0})
-				topRings[rodIndex][0] = activeRing.get()
-				activeRing.unset()
-				increaseScore()
-
+				
 			}
+		}
+
+		if (doDown) {
+			topRings[rodIndex][0] = activeRing.get()
+			activeRing.unset()
+			increaseScore()
+			
+			if (topRings[2].filter(Boolean).length === amountRings) {
+				winGame()
+			}	
 		}
 
 

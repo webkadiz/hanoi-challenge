@@ -9,6 +9,7 @@ const firstStageSocket = new WebSocket.Server({ noServer: true })
 const lastStageSocket = new WebSocket.Server({ noServer: true })
 const timerSocket = new WebSocket.Server({ noServer: true })
 
+let timerClient
 let lastStageClient
 let firstStageClients = Array(4).fill(null)
 let webSocketKeyTable = {}
@@ -97,7 +98,19 @@ lastStageSocket.on('connection', function connection(ws) {
 })
 
 timerSocket.on('connection', function connection(ws) {
-  // ...
+  timerClient = ws
+
+  timerClient.on('message', message => {
+
+    for (const firstStageClient of firstStageClients) {
+      firstStageClient && firstStageClient.send(JSON.stringify({
+        timer: message,
+      }))
+    }
+
+    console.log('get message from last stage client', message)
+  })
+
 })
 
 
