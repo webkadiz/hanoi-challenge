@@ -1,5 +1,9 @@
 import './first-stage.scss'
 import $ from 'jquery'
+//import 'jquery-ui/ui/effects/effect-explode.js'
+//import 'jquery-ui/ui/effects/effect-puff.js'
+//import 'jquery-ui/ui/effects/effect-clip.js'
+import 'jquery-ui/ui/effects/effect-blind.js'
 
 import './modules/init'
 import socket from './modules/websocket-first-stage'
@@ -14,7 +18,9 @@ socket.onopen = () => {
 }
 
 
-socket.onmessage = socket.onmessage = event => {
+
+
+socket.onmessage = event => {
 	console.log(event)
 	let incomingData
 
@@ -137,6 +143,21 @@ class Ring {
 		})
 	}
 
+	shake() {
+		const self = this
+		
+		this.isInAnim = true
+
+		this.el.classList.add('shake')
+
+		this.el.addEventListener('webkitAnimationEnd', function shake() {
+			console.log('shake')
+			self.el.classList.remove('shake')
+			self.isInAnim = false
+			self.el.removeEventListener('webkitAnimationEnd', shake)
+		})
+	}
+
 
 	get left() {
 		return float(this.css('left'))
@@ -227,6 +248,14 @@ function initGameMap() {
 	}
 
 
+
+	$(window).on('keyup', e => {
+		if (e.ctrlKey && e.shiftKey && e.key === 'F15') {
+			startGame()
+		}
+	})
+
+
 }
 
 
@@ -261,6 +290,7 @@ function winGame() {
 }
 
 function loseGame() {
+	let additionalScore = 0
 	
 	$(window).off('keyup')
 
@@ -274,11 +304,24 @@ function loseGame() {
 }
 
 
-$(window).on('keyup', e => {
+function startGame() {
+	$('.overlay').effect('blind', {}, 2000, () => {
+		$(window).on('keyup', handleKeyUp)
+	})
+}
+
+function stopGame() {
+	loseGame()
+}
+
+
+
+function handleKeyUp(e) {
 	const UP = e.key === 'w' || e.key === 'ArrowUp'
 	const RIGHT = e.key === 'd' || e.key === 'ArrowRight'
 	const DOWN = e.key === 's' || e.key === 'ArrowDown'
 	const LEFT = e.key === 'a' || e.key === 'ArrowLeft'
+	console.log(activeRing.ring)
 
 
 	if (activeRing.get().isInAnim) return
@@ -307,6 +350,8 @@ $(window).on('keyup', e => {
 					topRings[rodIndex].shiftRight()
 
 				} else {
+
+					activeRing.get().shake()
 
 				}
 			} else {
@@ -357,9 +402,13 @@ $(window).on('keyup', e => {
 		}
 
 		rodIndex = rodIndex === 0 ? 0 : rodIndex - 1		
+	} else {
+		e.preventDefault()
 	}
+}
 
-})
+
+
 
 
 initGameMap()

@@ -9,6 +9,8 @@ const firstStageSocket = new WebSocket.Server({ noServer: true })
 const lastStageSocket = new WebSocket.Server({ noServer: true })
 const timerSocket = new WebSocket.Server({ noServer: true })
 
+const cookieExpires = 60 * 60 * 24 * 7 * 2
+
 let timerClient
 let lastStageClient
 let firstStageClients = Array(4).fill(null)
@@ -21,7 +23,7 @@ firstStageSocket.on('headers', (headers, req) => {
 
 
   if (!cookieParsed.firstStageIndex && ~cliendIndex) {
-    headers.push(`Set-Cookie: ${cookie.serialize('firstStageIndex', cliendIndex)}`)
+    headers.push(`Set-Cookie: ${cookie.serialize('firstStageIndex', cliendIndex, { maxAge: cookieExpires})}`)
     webSocketKeyTable[req.headers['sec-websocket-key']] = cliendIndex
   }
 
@@ -49,7 +51,7 @@ firstStageSocket.on('connection', function connection(ws, req) {
   
   ws.on('message', message => {
     console.log('message from', clientIndex, message, typeof message)
-
+    let messageParsed
 
     if (message instanceof Buffer) {
       const data = JSON.stringify({
@@ -62,8 +64,12 @@ firstStageSocket.on('connection', function connection(ws, req) {
       return
     }
 
-    const messageParsed = JSON.parse(message)
-
+    try {
+      messageParsed = JSON.parse(message)
+    } catch (e) {
+      messageParsed = message
+    }
+    
     const data = JSON.stringify({
       clientIndex,
       data: messageParsed
@@ -108,7 +114,7 @@ timerSocket.on('connection', function connection(ws) {
       }))
     }
 
-    console.log('get message from last stage client', message)
+    console.log('get message from timer client', message)
   })
 
 })

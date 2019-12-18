@@ -1,6 +1,8 @@
 
 import './last-stage.scss'
 import $ from 'jquery'
+import 'jquery-ui/ui/effects/effect-clip.js'
+import 'jquery-ui/ui/effects/effect-explode.js'
 import socket from './modules/websocket-last-stage'
 console.log(123)
 
@@ -18,20 +20,30 @@ const videoElems = document.querySelectorAll('video')
  
 const flipBtns = $('.flip-btn')
 
-flipBtns.fadeOut()
+let lastStageIsOpen = false
 
 const gameStates = Array(4).fill(-1)
 
+const inputs = Array.from(document.querySelectorAll('.last-stage-input__item'))
 
-handleFirstStageGameOver('lose', 0)
-handleFirstStageGameOver('win', 1)
-handleFirstStageGameOver('win', 2)
-handleFirstStageGameOver('lose', 3)
+const inputEl = $('.last-stage-input')
 
+
+const amountAttemptsEl = $('.last-stage-attempts__amount') 
+
+const secretWord = 'время'
+
+let amountAttempts = 10
+
+let inAnim = false
+
+flipBtns.fadeOut()
 
 for (const i of range(4)) {
 	$('.last-stage-img').eq(i).css('background-image', `url(static/${i}.jpg)`)
 }
+
+amountAttemptsEl.text(amountAttempts)
 
 // обработчик входящих сообщений
 socket.onmessage = function(event) {
@@ -148,6 +160,134 @@ function handleFirstStageGameOver(result, clientIndex, additionalScore) {
 		if (result === 'lose') gameScore--
 	})
 }
+
+
+
+
+function addLetter(letter) {
+
+	for (const input of inputs) {
+		if (!input.textContent) {
+			input.textContent = letter
+			return
+		}
+	}
+
+}
+
+
+function removeLastLetter() {
+
+	for(const i of range(inputs.length - 1, -1, -1)) {
+		if (inputs[i].textContent) {
+			inputs[i].textContent = ''
+			return
+		}
+	}
+
+}
+
+function isLetter(letter) {
+	return ~'абвгдеёжзийклмнопрстучфцхшщьъыюяэ'.indexOf(letter)
+}
+
+
+function handleAttempt() {
+	if (inputs[inputs.length - 1].textContent) {
+
+		amountAttempts--
+
+		amountAttemptsEl.text(amountAttempts)
+
+		const word = inputs.reduce((prev, cur) => prev += cur.textContent, '')
+
+		if (word === secretWord) {
+			winGame()
+		} else {
+			loseAttempt()
+		}
+		console.log(word)
+	}
+}
+
+
+
+
+
+function loseAttempt() {
+
+	inputEl.addClass('lose-attempt')
+	inAnim = true
+
+	inputEl.on('webkitAnimationEnd', () => {
+		inputEl.removeClass('lose-attempt')
+		inputEl.off('webkitAnimationEnd')
+
+		inputs.forEach(input => input.textContent = '')
+
+	
+		inAnim = false
+
+		if (amountAttempts === 0) {
+			loseGame()
+		}
+	})
+
+	
+}
+
+
+function winGame() {
+	console.log('win')
+	$(window).off('keyup')
+
+}
+
+
+function loseGame() {
+	console.log('lose')
+
+	$(window).off('keyup')
+
+	//$('body').effect('explode')
+}
+
+
+$(window).keyup(e => {
+
+	if (inAnim) return
+
+	console.log(e)
+	const letter = e.key.toLowerCase()
+
+	if (e.key === 'Enter') {
+		lastStageIsOpen = true
+		$('.last-stage').effect('clip', { mode: 'show'} )
+
+	} else if (e.key === 'Escape') {
+		lastStageIsOpen = false
+		$('.last-stage').effect('clip', { mode: 'hide'} )
+	} else if (e.key === 'Backspace') {
+
+		if (lastStageIsOpen) {
+
+			removeLastLetter()
+
+		}
+
+	} else {
+
+		if (lastStageIsOpen && isLetter(letter)) {
+
+			addLetter(letter)
+
+			handleAttempt()
+
+		}
+
+	}
+})
+
 
 
 

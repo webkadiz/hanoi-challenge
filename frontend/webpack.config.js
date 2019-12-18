@@ -26,6 +26,10 @@ module.exports = {
 		        }
 		      }
 		    },
+		    {
+				test: /\.css$/,
+				use: ['style-loader', 'css-loader']
+			},
 			{
 				test: /\.(sass|scss)$/,
 				use: ['style-loader', 'css-loader', 'sass-loader']
@@ -35,7 +39,7 @@ module.exports = {
 				use: ['html-loader']
 			},
 			{
-				test: /\.(png|jpg)$/,
+				test: /\.(png|jpg|ttf|woff2|woff)$/,
 				use: ['file-loader']
 			}
 		]

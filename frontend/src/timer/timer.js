@@ -1,21 +1,12 @@
+import './bender.css'
 import './timer.scss'
 import $ from 'jquery'
 import socket from './modules/websocket-timer'
 
-let q = selector => document.querySelector(selector)
-let qAll = selector => document.querySelectorAll(selector)
 let timerEl = $(".timer")
 let time = timerEl.attr('data-time')
-let minute
-let second
-let strTime = ""
 let colors = ["#009914", "#ff0000", "#ff7777", "#f7de00"]
 let color = colors[0]
-let keyIP = "123557855"
-let strIP = ""
-let clickFunc
-let timer
-let result = 10
 
 function strFromTime(time) {
 	let str = ""
@@ -31,29 +22,31 @@ function strFromTime(time) {
 	return str
 }
 
-$(".page").on("click", clickFunc = e => {
+$(".page").on("click", () => {
 
 	socket.send('start')
-	$(".page").off("click", clickFunc)
+	console.log('click')
+	$(".page").off("click")
 
 
 	const timer = setInterval(() => {
 		
-	time -= 1
-	minute = ~~((time - 1) / 60)
+		time -= 1
+		const minute = ~~((time - 1) / 60)
+		const strTime = strFromTime(time)
+		timerEl.text(strTime)
 
-	if (time < 60) timerEl.css("animation", "scale 1s infinite linear")
-	if (minute > -1 && minute < 2) color = colors[minute + 1]
-	strTime = strFromTime(time)
-	timerEl.text(strTime)
-	timerEl.css("color", color)
+		//if (time < 60) timerEl.css("animation", "scale 1s infinite linear")
+		//if (minute > -1 && minute < 2) color = colors[minute + 1]
+		
+		//timerEl.css("color", color)
 
 
-	if (time <= 0) {
-		clearInterval(timer)
-		timerEl.css("animation", "none")
-		socket.send('stop')
-	}
+		if (time <= 0) {
+			clearInterval(timer)
+			timerEl.css("animation", "none")
+			socket.send('stop')
+		}
 
 	}, 1000)
 

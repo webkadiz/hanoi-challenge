@@ -6,6 +6,7 @@ body {
  font-family: "Roboto", sans-serif;
  perspective: 1000px;
  overflow: hidden;
+ font-family: "Bender";
 }
 
 .page {
@@ -15,7 +16,7 @@ body {
  display: flex;
  align-items: center;
  justify-content: center;
- background: url("white-waves.png");
+ background: black;
 }
 
 
@@ -44,7 +45,7 @@ body {
 }
 
 .timer {
- font-size: 20rem;
+ font-size: 23rem;
  text-align: center;
  letter-spacing: 15px;
  font-weight: bold;
@@ -52,6 +53,7 @@ body {
  transition: color 0.3s;
  user-select: none;
  backface-visibility: hidden;
+ text-shadow: 0 0 30px green
 }
 
 .timer.end {
