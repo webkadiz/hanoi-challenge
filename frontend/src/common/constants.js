@@ -1,4 +1,4 @@
 
 module.exports = {
-	WEBSOCKET_SERVER_URL: 'ws://localhost:8081'
+	WEBSOCKET_SERVER_URL: 'ws://192.168.10.120:8081'
 }
