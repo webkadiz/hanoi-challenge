@@ -255,3 +255,17 @@ body {
 	position: absolute;
 	z-index: -1
 }
+
+.glow {
+	transition: .6s;
+	opacity: 0;
+    background: linear-gradient(0, green -100%, transparent);
+    position: absolute;
+    bottom: 0;
+    filter: blur(12px);
+    z-index: -1;
+}
+
+.glow.active {
+	opacity: 1;	
+}

@@ -21,6 +21,7 @@ export default class Game {
 		this.baseHeightRing = 35 // px
 		this.increaseWidthRing = 70 // px
 
+		this.glowWidth = this.baseWidthRing - 20
 		this.rodWidth = 30 // px
 		this.marginRodEdge = 20 // px
 		this.rodIndex = 0
@@ -44,6 +45,8 @@ export default class Game {
 		this.computeValuesDependOnAmountRings()
 
 		this.fillRodContainer()
+
+		this.computeDimensionsGlow()
 
 		this.setRodsLeft()
 
@@ -71,6 +74,19 @@ export default class Game {
 		for (const i of range(3)) {
 			this.rodContainer[i] = new Rod(this.amountRings)
 		}
+	}
+
+	computeDimensionsGlow() {
+		for (const i of range(3)) {
+			console.log('for')
+			console.log(this.map.glows)
+			this.map.glows.eq(i).css('width', this.glowWidth)
+			this.map.glows.eq(i).css('height', this.baseHeightRing * this.amountRings + 100)
+			this.map.glows.eq(i).css('left', -this.glowWidth / 2 + this.rodWidth / 2)
+
+		}
+
+		this.map.glows.eq(0).addClass('active')
 	}
 
 	setRodsLeft() {
@@ -117,11 +133,21 @@ export default class Game {
 	}
 
 	increaseRodIndex() {
+		this.map.glows.eq(this.rodIndex).removeClass('active')
+
 		this.rodIndex = this.rodIndex === 2 ? 2 : this.rodIndex + 1
+
+		console.log(this.map.glows.eq(this.rodIndex))
+
+		this.map.glows.eq(this.rodIndex).addClass('active')
 	}
 
 	decreaseRodIndex() {
+		this.map.glows.eq(this.rodIndex).removeClass('active')
+
 		this.rodIndex = this.rodIndex === 0 ? 0 : this.rodIndex - 1
+
+		this.map.glows.eq(this.rodIndex).addClass('active')
 	}
 
 	getAdditionalScore() {
