@@ -35,6 +35,9 @@ const secretWord = 'время'
 
 let amountAttempts = 10
 
+
+const gameOverScreen = $('.game-over-screen')
+
 let inAnim = false
 
 flipBtns.fadeOut()
@@ -202,7 +205,7 @@ function handleAttempt() {
 		const word = inputs.reduce((prev, cur) => prev += cur.textContent, '')
 
 		if (word === secretWord) {
-			winGame()
+			gameOver()
 		} else {
 			loseAttempt()
 		}
@@ -229,7 +232,7 @@ function loseAttempt() {
 		inAnim = false
 
 		if (amountAttempts === 0) {
-			loseGame()
+			gameOver()
 		}
 	})
 
@@ -237,20 +240,37 @@ function loseAttempt() {
 }
 
 
-function winGame() {
+function gameOver() {
 	console.log('win')
 	$(window).off('keyup')
 
+	//gameOverScreen.addClass('animation')
+
+	//gameOverScreen.on('webkitAnimationEnd', () => {
+	//})
+
+	let iter = 0
+
+
+
+	const interval = setInterval(() => {
+
+		if (iter <= 200) {
+			gameOverScreen.css('background', `radial-gradient(transparent ${100 - iter}%, black 100%)`)
+		} else if (iter <= 400) {
+			gameOverScreen.css('background', `radial-gradient(transparent -100%, black ${100 - iter + 200}%)`)
+		} else {
+			clearInterval(interval)
+		}
+
+
+		iter++
+
+	}, 10)
+
 }
 
 
-function loseGame() {
-	console.log('lose')
-
-	$(window).off('keyup')
-
-	//$('body').effect('explode')
-}
 
 
 $(window).keyup(e => {

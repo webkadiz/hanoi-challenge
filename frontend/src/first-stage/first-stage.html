@@ -4,9 +4,12 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<script src="https://kit.fontawesome.com/f69c76f886.js" crossorigin="anonymous"></script>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700,900&display=swap" rel="stylesheet">
 </head>
 <body>
 	
+	<div class="level"></div>
+
 	<div class="box">
 		
 		<div class="field">
@@ -18,20 +21,23 @@
 
 		
 		
+		<div class="snow-floor"></div>
 		<div class="floor"></div>
 	</div>
 
-	<div class="score"></div>
-	<div class="best-score"></div>
+	<div class="score-box">Score: <span class="score"></span></div>
+	<div class="best-score-box">Best: &nbsp;&nbsp;&nbsp;<span class="best-score"></span></div>
 
 	<div class="win">
-		<i class="far fa-check-circle"></i>
+		<i class="icon-ok-circled2"></i>
 	</div>
 	<div class="lose">
-		<i class="far fa-times-circle"></i>
+		<i class="icon-cancel-circled2"></i>
 	</div>
 
 	<div class="overlay"></div>
+
+	<canvas class="snowfall"></canvas>
 	
 </body>
 </html>
