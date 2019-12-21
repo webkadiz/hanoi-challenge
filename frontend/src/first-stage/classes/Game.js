@@ -22,7 +22,7 @@ export default class Game {
 		this.increaseWidthRing = 70 // px
 
 		this.glowWidth = this.baseWidthRing - 20
-		this.rodWidth = 30 // px
+		this.rodWidth = 43 // px
 		this.marginRodEdge = 20 // px
 		this.rodIndex = 0
 		this.rememberRodIndex = 0

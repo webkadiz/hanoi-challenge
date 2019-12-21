@@ -25,7 +25,8 @@ video {
 	width: 100%;
 	height: 100%;
 	position: absolute;
-	z-index: -1
+	z-index: -1;
+    object-fit: cover;
 }
 
 .card {
@@ -154,7 +155,7 @@ video {
 	width: 100%;
 	height: 100%;
 	pointer-events: none;
-	z-index: 1000;
+	z-index: 100;
 	background: radial-gradient(transparent 100%, black 100%);
 }
 
@@ -190,23 +191,85 @@ video {
  }
 }
 
-@keyframes gradient-anim {
-	@for $i from 0 to 50 {
-		#{$i + '%'} {
-			background: radial-gradient(transparent #{100 - $i * 4+ '%'}, black 100%);
-		}
+
+
+
+.score {
+	position: absolute;
+    left: 50%;
+    color: green;
+    font-size: 170px;
+    transform: rotate(-90deg);
+    z-index: 10000;
+    bottom: 110%;
+    transform-origin: bottom left;
+}
+
+.score.animation {
+	animation: score-anim 4s;
+	animation-fill-mode: forwards;
+}
+
+
+
+@keyframes score-anim {
+	
+	25% {
+		transform: rotate(-190deg);
 	}
 
-	@for $i from 0 to 49 {
-		#{$i + 50 + '%'} {
-			background: radial-gradient(transparent -100%, black #{100 - $i * 2 + '%'});
-		}
+	40% {
+		transform: rotate(-170deg);
+	}
+	
+	50% {
+		transform: rotate(-180deg);
+		bottom: 110%;
+		left: 50%
 	}
 
+	60% {
+		left: 49%;
+	}
+
+	70% {
+		left: 44%;
+	}
+
+	
+	80% {
+		left: 47%;
+	}
+
+	90% {
+		left: 42%;
+	}
+	
 	100% {
-		animation-play-state: paused;
+	    transform: rotate(-360deg) translateX(-50%);
+	    bottom: 40%;
+	    left: 50%;
 	}
 
 
 }
 
+
+.container {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1000
+}
+
+#loading-init {
+	display: none;
+}
+
+#controls {
+	display: none;
+}
+
+#menu {
+	display: none;
+}

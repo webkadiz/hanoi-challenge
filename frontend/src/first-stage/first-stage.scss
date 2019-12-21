@@ -51,11 +51,13 @@ body {
 
 .rod {
 	position: absolute;
-	background: url('img/lollipop.png');
-	width: 30px;
+	background: url('img/lollipop1.png');
+	width: 43px;
 	height: 93%;
 	bottom: 0;
-	border-radius: 3px;
+	background-size: cover;
+    background-position: -6px 0px;
+    border-radius: 15px;
 }
 
 .ring {

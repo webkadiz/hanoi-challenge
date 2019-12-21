@@ -4,11 +4,14 @@ import $ from 'jquery'
 import 'jquery-ui/ui/effects/effect-clip.js'
 import 'jquery-ui/ui/effects/effect-explode.js'
 import socket from './modules/websocket-last-stage'
-console.log(123)
 
 import { range } from '@/common/utils'
 
+//import { init } from './modules/firework.js'
+
 let gameScore = 5
+
+const scoreEl = $('.score')
 
 const mediaSourceArray = Array(4).fill(null)
 const sourceBufferArray = Array(4).fill(null)
@@ -45,6 +48,9 @@ flipBtns.fadeOut()
 for (const i of range(4)) {
 	$('.last-stage-img').eq(i).css('background-image', `url(static/${i}.jpg)`)
 }
+
+
+$('.last-stage').effect('clip', { mode: 'hide'} )
 
 amountAttemptsEl.text(amountAttempts)
 
@@ -244,14 +250,41 @@ function gameOver() {
 	console.log('win')
 	$(window).off('keyup')
 
-	//gameOverScreen.addClass('animation')
 
-	//gameOverScreen.on('webkitAnimationEnd', () => {
-	//})
+
+	
+
+	
+
+
+	setTimeout(() => {
+
+
+		gradientAnimation()
+
+		
+
+		setTimeout(() => {
+
+
+			scoreEl.text(gameScore)
+			scoreEl.addClass('animation')
+
+			setTimeout(() => import('./modules/firework.js'), 4500)
+
+		}, 4000)
+
+	}, 1000)
+
+
+
+
+}
+
+
+function gradientAnimation() {
 
 	let iter = 0
-
-
 
 	const interval = setInterval(() => {
 
@@ -269,7 +302,6 @@ function gameOver() {
 	}, 10)
 
 }
-
 
 
 
