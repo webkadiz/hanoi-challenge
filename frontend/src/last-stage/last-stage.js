@@ -15,6 +15,7 @@ const scoreEl = $('.score')
 
 const mediaSourceArray = Array(4).fill(null)
 const sourceBufferArray = Array(4).fill(null)
+const timeRanges = Array(4).fill(0)
 
 const mimeCodec = 'video/webm;codecs=vp8'
 const queueArray = Array(4).fill(null)
@@ -30,6 +31,7 @@ let amountGameOver = 0
 const inputs = Array.from(document.querySelectorAll('.last-stage-input__item'))
 
 const inputEl = $('.last-stage-input')
+
 
 
 const amountAttemptsEl = $('.last-stage-attempts__amount') 
@@ -56,7 +58,6 @@ amountAttemptsEl.text(amountAttempts)
 
 // обработчик входящих сообщений
 socket.onmessage = function(event) {
-	console.log(event)
 	let incomingData
 
 	try {
@@ -71,11 +72,10 @@ socket.onmessage = function(event) {
 
 function handleIncomingData(incomingData) {
 
-	console.log(incomingData)
 
   if (incomingData.buffer) {
 
-  	console.log(queueArray[incomingData.clientIndex])
+  	//console.log(queueArray[incomingData.clientIndex])
 
   	appendBuffer(incomingData.buffer, incomingData.clientIndex)	
 
@@ -100,13 +100,23 @@ function appendBuffer(buf, clientIndex) {
 	const mediaSource = mediaSourceArray[clientIndex]
 	const queue = queueArray[clientIndex]
 
-	
-	console.log(sourceBuffer.updating, mediaSource.readyState != "open", queue.length > 0)
-	
+	timeRanges[clientIndex]++
+
+	const timeRange = timeRanges[clientIndex]
+
+
+	// if (timeRange && timeRange % 30 === 0 && sourceBuffer.buffered.length) {
+	// 	sourceBuffer.remove(sourceBuffer.buffered.start(0), sourceBuffer.buffered.end(0) / 2 )
+	// 	console.log(sourceBuffer.buffered.start(0), 'start')
+	// 	console.log(sourceBuffer.buffered.end(0), 'end')
+	// 	console.log(timeRange, 'remove')
+	// }
+
 	if (sourceBuffer.updating || mediaSource.readyState != "open" || queue.length > 0) {
 		queue.push(arrayBuffer)
 	} else {
 		sourceBuffer.appendBuffer(arrayBuffer)
+		
 	}
 	
 
@@ -129,6 +139,7 @@ function createMediaSource(clientIndex) {
 	const mediaSource = new MediaSource()
 	const queue = []
 
+
 	mediaSourceArray[clientIndex] = mediaSource
 	queueArray[clientIndex] = queue
 
@@ -137,10 +148,14 @@ function createMediaSource(clientIndex) {
 
 	mediaSource.addEventListener('sourceopen', () => {
 		console.log('source open')
+		mediaSource.duration = 1000000000
+
 		const sourceBuffer = mediaSource.addSourceBuffer(mimeCodec)
 		sourceBufferArray[clientIndex] = sourceBuffer
 
 		sourceBuffer.addEventListener('updateend', () => {
+			const timeRange = timeRanges[clientIndex]
+
 			if (queue.length > 0 && !sourceBuffer.updating) {
       			sourceBuffer.appendBuffer(queue.shift());
     		}

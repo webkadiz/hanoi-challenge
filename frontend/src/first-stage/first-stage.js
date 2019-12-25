@@ -66,7 +66,7 @@ function handleIncomingData(incomingData) {
 
 
 
-navigator.mediaDevices.getDisplayMedia({ video: true })
+navigator.mediaDevices.getDisplayMedia({ video: { width: 640, height: 360, frameRate: 10} })
 	.then(stream => {
 		const recorder = new MediaRecorder(stream)
 		
