@@ -25,7 +25,7 @@ const flipBtns = $('.flip-btn')
 
 let lastStageIsOpen = false
 
-const gameStates = Array(4).fill(-1)
+const amountGameOver = 0
 
 const inputs = Array.from(document.querySelectorAll('.last-stage-input__item'))
 
@@ -83,7 +83,7 @@ function handleIncomingData(incomingData) {
 
   } else if(incomingData.data.gameOver) {
 
-  	handleFirstStageGameOver(incomingData.data.gameOver, incomingData.clientIndex, incomingData.additionalScore)
+  	handleFirstStageGameOver(incomingData.data.gameOver, incomingData.clientIndex, incomingData.data.additionalScore)
 
   }
 
@@ -153,12 +153,15 @@ function createMediaSource(clientIndex) {
 function handleFirstStageGameOver(result, clientIndex, additionalScore) {
 
 	gameScore += additionalScore
+	amountGameOver++
+
+	if (amountGameOver === 4) {
+		additionalScore++
+	}
 
 	if (result === 'win') {
-		gameStates[clientIndex] = 1
 		flipBtns.eq(clientIndex).text('Перевернуть за 0 баллов')
 	} else if(result === 'lose') {
-		gameStates[clientIndex] = 0
 		flipBtns.eq(clientIndex).text('Перевернуть за 1 баллов')
 	}
 

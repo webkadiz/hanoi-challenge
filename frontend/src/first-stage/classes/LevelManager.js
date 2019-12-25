@@ -2,7 +2,7 @@ import $ from 'jquery'
 
 export default class LevelManager {
 	constructor(game) {
-		this.gameLevels = [3, 3, 4, 5]
+		this.gameLevels = [3, 3, 4, 4, 2]
 		this.gameLevelIndex = -1
 		this.game = game
 		this.screen = $('.level')

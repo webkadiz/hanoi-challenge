@@ -32,6 +32,7 @@ export default class Game {
 		this.ableWidthForRods = -1
 		this.score = -1
 		this.bestScore = -1
+		this.isGameOver = false
 	}
 
 
@@ -178,6 +179,8 @@ export default class Game {
 	}
 
 	gameOver(result) {
+		if (this.isGameOver) return
+
 		const additionalScore = this.getAdditionalScore()
 
 		$(window).off('keyup')
@@ -188,6 +191,8 @@ export default class Game {
 			gameOver: result,
 			additionalScore
 		}))
+
+		this.gameOver = true
 	}
 
 	checkVictory() {
