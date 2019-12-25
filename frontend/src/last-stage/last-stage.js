@@ -25,7 +25,7 @@ const flipBtns = $('.flip-btn')
 
 let lastStageIsOpen = false
 
-const amountGameOver = 0
+let amountGameOver = 0
 
 const inputs = Array.from(document.querySelectorAll('.last-stage-input__item'))
 
