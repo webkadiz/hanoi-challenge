@@ -75,6 +75,8 @@ function handleIncomingData(incomingData) {
 
   if (incomingData.buffer) {
 
+  	console.log(queueArray[incomingData.clientIndex])
+
   	appendBuffer(incomingData.buffer, incomingData.clientIndex)	
 
   } else if(incomingData.data.create) {
@@ -154,6 +156,8 @@ function handleFirstStageGameOver(result, clientIndex, additionalScore) {
 
 	gameScore += additionalScore
 	amountGameOver++
+
+	console.log(amountGameOver)
 
 	if (amountGameOver === 4) {
 		gameScore++

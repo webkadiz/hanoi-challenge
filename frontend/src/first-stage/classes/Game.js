@@ -159,7 +159,7 @@ export default class Game {
 		const self = this
 
 		$(window).on('keyup', function handleKeyUp(e) {
-			if (e.ctrlKey && e.shiftKey && e.key === 'F15') {
+			if (e.ctrlKey && e.shiftKey && e.key === 'F12') {
 				self.startGame()
 				$(window).off('keyup', handleKeyUp)
 			}
