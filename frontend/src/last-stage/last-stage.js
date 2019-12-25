@@ -156,7 +156,7 @@ function handleFirstStageGameOver(result, clientIndex, additionalScore) {
 	amountGameOver++
 
 	if (amountGameOver === 4) {
-		additionalScore++
+		gameScore++
 	}
 
 	if (result === 'win') {
