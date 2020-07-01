@@ -7,7 +7,8 @@
     "serve": "webpack-dev-server",
     "dev": "webpack --mode development",
     "prod": "webpack --mode production",
-    "test": "mocha-webpack --webpack-config webpack.config-test.js --require test/setup.js ./test/test.js"
+    "test": "mocha-webpack -c --webpack-config webpack.config-test.js --require test/setup.js test/*.spec.js",
+    "test-single": "mocha-webpack -c --webpack-config webpack.config-test.js --require test/setup.js"
   },
   "keywords": [],
   "author": "",
