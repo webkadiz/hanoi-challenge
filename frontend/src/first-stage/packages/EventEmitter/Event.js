@@ -15,7 +15,7 @@ export default class Event {
     }
   }
 
-  removeAllListener() {
+  removeAllListeners() {
     this._listenersStore.clear();
   }
 
