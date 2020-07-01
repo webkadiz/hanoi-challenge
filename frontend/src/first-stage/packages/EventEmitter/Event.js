@@ -10,7 +10,9 @@ export default class Event {
   }
 
   addListener(listener) {
-    this._listenersStore.add(listener);
+    if (!this._listenersStore.get(listener)) {
+      this._listenersStore.add(listener);
+    }
   }
 
   removeAllListener() {
