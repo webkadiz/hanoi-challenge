@@ -1,5 +1,5 @@
 import {assert} from 'chai'
-import EventEmitterError from '../src/first-stage/classes/EventEmitterError'
+import EventEmitterError from '../src/first-stage/packages/EventEmitter/EventEmitterError'
 
 describe("EventEmitterError", function() {
   it("Instance of", function() {
