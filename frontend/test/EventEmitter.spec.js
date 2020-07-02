@@ -1,6 +1,8 @@
 import { assert } from "chai";
 import { EventEmitter } from "../src/first-stage/packages/EventEmitter/EventEmitter";
-import { Event } from "../src/first-stage/packages/EventEmitter/Event";
+import Factory from "../src/first-stage/packages/EventEmitter/Factory";
+import Event from "../src/first-stage/packages/EventEmitter/Event";
+import List from "../src/first-stage/packages/EventEmitter/List";
 
 const ERROR_CLASS_NAME = "EventEmitterError";
 
@@ -8,7 +10,7 @@ describe("EventEmitter", () => {
   let emitter
 
   beforeEach(function() {
-    emitter = new EventEmitter(Event)
+    emitter = new EventEmitter(new Factory(Event, List))
   })
 
   describe("Private API", function() {
@@ -173,7 +175,7 @@ describe("EventEmitter", () => {
       });
 
       it("Test emit payload", (done) => {
-        payload = { a: 1 };
+        const payload = { a: 1 };
         emitter.on("test", (data) => {
           assert.equal(data, payload);
           done();
@@ -224,7 +226,7 @@ describe("EventEmitter", () => {
         }
       });
 
-      it("Remove listener functionality", () => {
+      it("Remove listener functionality", function(done){
         const order = [];
         const testHandler = () => order.push(2);
         emitter.on("test", () => order.push(1));
