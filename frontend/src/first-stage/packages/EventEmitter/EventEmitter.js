@@ -54,6 +54,16 @@ class EventEmitter {
     return event.emit(payload)
   }
 
+  listenersCount(eventName) {
+    this._throwErrorIfEventNameInValid(eventName)
+    
+    if (!this._eventIsExists(eventName)) return 0
+
+    const event = this._getEvent(eventName)
+
+    return event.listenersCount()
+  }
+
   _throwErrorIfEventNameInValid(eventName) {
     if (this._eventNameIsValid(eventName)) return
     else throw new EventEmitterError(INCORRECT_EVENT_NAME_TYPE)
