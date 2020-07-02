@@ -4,10 +4,14 @@ export default class Facroty {
     this._deps = deps
   }
 
-  create() {
+  create(...paramsForClassToCreate) {
     const createdDeps = this._createDeps()
+    const allParams = [
+      ...paramsForClassToCreate,
+      ...createdDeps
+    ]
 
-    return new this._classToCreate(...createdDeps)
+    return new this._classToCreate(...allParams)
   }
 
   _createDeps() {
