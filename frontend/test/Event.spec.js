@@ -6,8 +6,8 @@ describe("Event", function () {
   let event, res;
 
   beforeEach(function () {
-    const listenerStore = new List().create();
-    event = new Event("event", listenerStore).create();
+    const listenerStore = new List();
+    event = new Event("event", listenerStore);
   });
 
   describe("Emit", function () {
