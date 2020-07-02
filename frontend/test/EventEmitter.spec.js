@@ -157,15 +157,6 @@ describe("EventEmitter", () => {
           assert.equal(e.name, ERROR_CLASS_NAME);
         }
       });
-
-      it("Incorrect emit with more payload", () => {
-        try {
-          emitter.emit("test", { a: 1 }, { b: 1 });
-          assert.fail();
-        } catch (e) {
-          assert.equal(e.name, ERROR_CLASS_NAME);
-        }
-      });
     });
 
     describe("Emit functionality", function () {
