@@ -1,13 +1,8 @@
 export default class List {
-  constructor() {
-    this._list = []
-  }
-
-  create(initVal) {
+  constructor(initVal) {
     if (Array.isArray(initVal)) this._list = initVal
     else if (initVal === undefined) this._list = []
     else throw new Error()
-    return this
   }
 
   add(item) {
@@ -16,13 +11,13 @@ export default class List {
   }
 
   clear() {
-    this.create()
+    this._list = []
     return this
   }
 
   remove(item) {
     const itemArr = this._list.filter(_item => _item !== item)
-    this.create(itemArr)
+    this._list = itemArr
     return this
   }
 
