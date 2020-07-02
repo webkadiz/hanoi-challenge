@@ -10,8 +10,8 @@ const EMIT_WITH_MORE_PAYLOAD = "Emit expects 2 parameters: eventName, payload"
 
 
 class EventEmitter {
-  constructor(event) {
-    this._event = event
+  constructor(eventsFactory) {
+    this._eventsFactory = eventsFactory
     this._eventsStore = {}
   }
 
@@ -80,7 +80,7 @@ class EventEmitter {
   }
 
   _createEvent(eventName) {
-    this._eventsStore[eventName] = new this._event(eventName).create()
+    this._eventsStore[eventName] = this._eventsFactory.create(eventName)
   }
 
   _getEvent(eventName) {
