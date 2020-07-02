@@ -1,12 +1,7 @@
 export default class Event {
   constructor(eventName, listenersStore) {
-    this._eventName = eventName;
+    this._eventName = eventName
     this._listenersStore = listenersStore;
-  }
-
-  create() {
-    this._listenersStore.create()
-    return this
   }
 
   addListener(listener) {
