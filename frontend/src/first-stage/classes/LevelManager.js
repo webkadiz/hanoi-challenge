@@ -16,7 +16,8 @@ export default class LevelManager {
 	}	
 
 	createCeil(gameLevelIndex) {
-		const ceil = $(`<div class="level-ceil">${gameLevelIndex + 1}</div>`)
+		const gameLevelNumber = this.calcIndexNumber(gameLevelIndex)
+		const ceil = $(`<div class="level-ceil">${gameLevelNumber}</div>`)
 
 		ceil.click(() => {
 			this.gameLevelIndex = gameLevelIndex
@@ -27,6 +28,10 @@ export default class LevelManager {
 		})
 
 		return ceil
+	}
+
+	calcIndexNumber(gameLevelIndex) {
+		return gameLevelIndex + 1
 	}
 
 	getGameLevel() {
