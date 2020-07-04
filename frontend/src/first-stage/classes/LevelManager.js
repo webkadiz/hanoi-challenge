@@ -1,11 +1,11 @@
 import $ from 'jquery'
 
 export default class LevelManager {
-	constructor(game) {
+	constructor(emitter, screen) {
 		this.gameLevels = [3, 3, 4, 4, 2]
 		this.gameLevelIndex = -1
-		this.game = game
-		this.screen = $('.level')
+		this.emitter = emitter
+		this.screen = screen
 	}
 
 
@@ -35,7 +35,7 @@ export default class LevelManager {
 
 	setGameLevel() {
 
-		this.game.setLevel(this.getGameLevel())
+		emitter.emit('setLevel', this.getGameLevel())
 
 	}
 
