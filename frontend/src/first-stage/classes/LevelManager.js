@@ -38,7 +38,7 @@ export default class LevelManager {
 
 	setGameLevel() {
 
-		emitter.emit('setLevel', this.getGameLevel())
+		emitter.emit('setGameLevel', this.getGameLevel())
 
 	}
 
