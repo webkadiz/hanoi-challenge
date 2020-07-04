@@ -3,8 +3,6 @@ import $ from "jquery";
 import LevelManager from "../../src/first-stage/classes/LevelManager";
 import { EventEmitter, Factory, Event, List } from "@webkadiz/event-emitter";
 
-global.$ = $;
-
 describe("LevelManager", function () {
   let levelManager, emitter, screen, gameLevels;
 
