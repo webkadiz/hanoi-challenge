@@ -1,79 +1,37 @@
 import './fontello.css'
 import './first-stage.scss'
-import $ from 'jquery'
 import 'jquery-ui/ui/effects/effect-blind'
 
 import './modules/init'
-import socket from './modules/websocket-first-stage'
 
-import Snowfall from './classes/Snowfall'
+import $ from 'jquery'
+import {EventEmitter, Event, Factory, List} from '@webkadiz/event-emitter'
+import GameManager from './classes/GameManager'
 import Game from './classes/Game'
+import LevelManger from './classes/LevelManager'
+import GameMap from './classes/GameMap'
+import SocketManager from './classes/SocketManager'
+import VideoStreamManager from './classes/VideoStreamManager'
+import Snowfall from './classes/Snowfall'
 
 
+const emitter = new EventEmitter(new Factory(Event, List))
 
-
-const game = new Game()
-const snowfall = new Snowfall('.snowfall')
-
-
-game.createLevelScreen()
-snowfall.init()
-snowfall.animate()
-
-
-
-
-socket.onopen = () => {
-	console.log('open')
-	socket.send(JSON.stringify({
-		create: true
-	}))
-}
-
-
-socket.onmessage = event => {
-	console.log(event)
-	let incomingData
-
-	try {
-		incomingData = JSON.parse(event.data)
-	} catch(e) {
-		incomingData = event.data
-	}
-
-  handleIncomingData(incomingData)
-}
-
-
-function handleIncomingData(incomingData) {
-	console.log(incomingData)
-
-	if (incomingData.reload) {
-
-		location.reload()
-	
-	} else if (incomingData.timer === 'start') {
-
-		game.startGame()
-			
-	} else if (incomingData.timer === 'stop') {
-
-		game.stopGame()
-
-	}
-}
-
-
-
-
-navigator.mediaDevices.getDisplayMedia({ video: { width: 640, height: 360, frameRate: 10} })
-	.then(stream => {
-		const recorder = new MediaRecorder(stream)
-		
-		recorder.ondataavailable = e => socket.send(e.data)
-		
-		recorder.start(1000)
-	})
-	.catch(err => console.log(err))
-
-
+new GameManager(
+	new Game(
+		new LevelManger(
+			$('.level'),
+			[3, 3, 4, 4, 2],
+			emitter
+		),
+		new GameMap(),
+		emitter
+	),
+	new SocketManager(
+		new WebSocket("ws://localhost:8081/first-stage"),
+		emitter
+	),
+	new VideoStreamManager(emitter),
+	new Snowfall('.snowfall'),
+	emitter
+).run()
