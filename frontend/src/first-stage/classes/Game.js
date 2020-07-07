@@ -1,17 +1,16 @@
 import $ from 'jquery'
 import { range, float } from '@/common/utils'
-import socket from '../modules/websocket-first-stage'
 import Ring from './Ring'
 import ActiveRing from './ActiveRing'
 import GameMap from './GameMap'
-import LevelManager from './LevelManager'
 import Rod from './Rod'
 
 export default class Game {
 
-	constructor() {
+	constructor(levelManager, emitter) {
 		this.amountRings = -1
-		this.levelManager = new LevelManager(this)
+		this.emitter = emitter
+		this.levelManager = levelManager
 		this.map = new GameMap()
 		this.activeRing = new ActiveRing()
 		this.rodContainer = Array(3).fill(0)
@@ -38,6 +37,12 @@ export default class Game {
 
 	createLevelScreen() {
 		this.levelManager.createScreen(this)
+	}
+
+	setGameLevelHandler() {
+		this.emitter.on("setGameLevel", gameLevel => {
+			this.setLevel(gameLevel)
+		})
 	}
 
 	setLevel(gameLevel) {
@@ -186,11 +191,11 @@ export default class Game {
 		$(window).off('keyup')
 
 		$(`.${result}`).addClass('active')
-	
-		socket.send(JSON.stringify({
+		
+		this.emitter.emit("gameOver", {
 			gameOver: result,
 			additionalScore
-		}))
+		})
 
 		this.gameOver = true
 	}
