@@ -7,14 +7,15 @@ import Rod from './Rod'
 
 export default class Game {
 
-	constructor(levelManager, emitter) {
+	constructor(levelManager, gameMap, emitter) {
 		this.amountRings = -1
 		this.emitter = emitter
 		this.levelManager = levelManager
-		this.map = new GameMap()
+		this.map = gameMap
 		this.activeRing = new ActiveRing()
 		this.rodContainer = Array(3).fill(0)
-
+		this.offline = false
+		this.isSetLevel = false
 		
 		this.baseWidthRing = 140 // px
 		this.baseHeightRing = 35 // px
@@ -34,6 +35,13 @@ export default class Game {
 		this.isGameOver = false
 	}
 
+	setOfflineMode() {
+		this.offline = true
+
+		if (this.isSetLevel) {
+			this.startGame()
+		}
+	}
 
 	createLevelScreen() {
 		this.levelManager.createScreen(this)
@@ -42,6 +50,11 @@ export default class Game {
 	setGameLevelHandler() {
 		this.emitter.on("setGameLevel", gameLevel => {
 			this.setLevel(gameLevel)
+			this.isSetLevel = true
+
+			if (this.offline) {
+				this.startGame()
+			}
 		})
 	}
 
