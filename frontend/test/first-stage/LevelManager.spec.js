@@ -10,7 +10,7 @@ describe("LevelManager", function () {
     emitter = new EventEmitter(new Factory(Event, List));
     screen = $("<div class='level'></div>");
     gameLevels = [3, 3, 4, 4, 2];
-    levelManager = new LevelManager(emitter, screen, gameLevels);
+    levelManager = new LevelManager(screen, gameLevels, emitter);
   });
 
   describe("calcIndexNumber", function () {
@@ -31,14 +31,14 @@ describe("LevelManager", function () {
 
   describe("createScreen", function () {
     it("Test length screen", function () {
-      levelManager = new LevelManager(emitter, screen, [1, 2]);
+      levelManager = new LevelManager(screen, [1, 2], emitter);
       levelManager.createScreen();
 
       assert.equal(screen.children().length, 2);
     });
 
     it("Test value ceil", function () {
-      levelManager = new LevelManager(emitter, screen, [1, 2]);
+      levelManager = new LevelManager(screen, [1, 2], emitter);
       levelManager.createScreen();
 
       assert.equal(screen.children().eq(0).text(), "1");
@@ -52,7 +52,7 @@ describe("LevelManager", function () {
     });
 
     it("Game level before choose level", function () {
-      levelManager = new LevelManager(emitter, screen, [3, 5]);
+      levelManager = new LevelManager(screen, [3, 5], emitter);
       const levelIndex = 0;
       const ceil = levelManager.createCeil(levelIndex);
 
@@ -64,7 +64,6 @@ describe("LevelManager", function () {
 
   describe("setGameLevel", function () {
     it("Test emit", function (done) {
-      debugger
       emitter.on("setGameLevel", function () {
         done();
       });
