@@ -12,13 +12,10 @@ export default class SocketManager {
   }
 
   openHandler(event) {
-    console.log('open', this)
-    this.emitter.emit('socketOpen')
-
+    this.emitter.emit('socketOpen', event)
   }
 
   messageHandler(event) {
-    console.log(event)
     let incomingData
 
     try {
@@ -31,13 +28,19 @@ export default class SocketManager {
   }
 
   closeHandler(event) {
-    console.log('close')
-    this.emitter.emit('socketClose')
+    this.emitter.emit('socketClose', event)
   }
 
-  errorHandler(event) {}
+  errorHandler(event) {
+    this.emitter.emit('socketError', event)
+  }
 
   send(data) {
-    this.socket.send(data)
+    if (this.socket.readyState == 1) {
+      this.socket.send(JSON.stringify(data))
+      return true
+    } else {
+      return false
+    }
   }
 }
