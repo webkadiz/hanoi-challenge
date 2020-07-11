@@ -2,8 +2,6 @@ import './fontello.css'
 import './first-stage.scss'
 import 'jquery-ui/ui/effects/effect-blind'
 
-import './modules/init'
-
 import $ from 'jquery'
 import {EventEmitter, Event, Factory, List} from '@webkadiz/event-emitter'
 import GameManager from './classes/GameManager'
@@ -13,7 +11,7 @@ import GameMap from './classes/GameMap'
 import SocketManager from './classes/SocketManager'
 import VideoStreamManager from './classes/VideoStreamManager'
 import Snowfall from './classes/Snowfall'
-
+import InjectorArrayMethods from './classes/InjectorArrayMethods'
 
 const emitter = new EventEmitter(new Factory(Event, List))
 
@@ -33,5 +31,6 @@ new GameManager(
 	),
 	new VideoStreamManager(emitter),
 	new Snowfall('.snowfall'),
+	new InjectorArrayMethods(),
 	emitter
 ).run()

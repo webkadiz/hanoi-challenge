@@ -1,8 +1,9 @@
 export default class GameManager {
-  constructor(game, socketManager, videoStreamManager, snowfall, emitter) {
+  constructor(game, socketManager, videoStreamManager, snowfall, injectorArrayMethods, emitter) {
     this.game = game
     this.socketManager = socketManager
     this.videoStreamManager = videoStreamManager
+    this.injectorArrayMethods = injectorArrayMethods
     this.emitter = emitter
     this.snowfall = snowfall
   }
@@ -14,6 +15,7 @@ export default class GameManager {
     this.emitter.on('videoStreamDataAvailable', this.videoStreamDataAvailable.bind(this))
     
     this.socketManager.setHandlers()
+    this.injectorArrayMethods.inject()
 
     this.game.setGameLevelHandler()
     this.game.createLevelScreen()
