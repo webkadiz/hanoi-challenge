@@ -20,7 +20,7 @@ export default class VideoStreamManager {
         recorder.start(1000)
       })
       .catch(err => {
-        console.log(err)
+        this.emitter.emit("videoStreamBlock", err)
       })
   }
 }
