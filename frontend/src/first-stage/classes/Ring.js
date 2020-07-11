@@ -2,18 +2,24 @@ import $ from 'jquery'
 import { float } from '@/common/utils'
 
 export default class Ring {
-	isInAnim = false
 	
 	constructor() {
-
+		this.isInAnim = false
+		this.el = false
+		this.appended = false
 	}
 
 	createElement() {
+		if(this.el) return
+
 		this.el = $('<div class="ring"></div>')[0]
 	}
 
 	insertInDocument() {
+		if (this.appended) return
+		
 		$('.field').append(this.el)
+		this.appended = true
 	}
 
 	bindJqueryFunctions() {
@@ -37,7 +43,6 @@ export default class Ring {
 		this.el.classList.add('shake')
 
 		this.el.addEventListener('webkitAnimationEnd', function shake() {
-			console.log('shake')
 			self.el.classList.remove('shake')
 			self.isInAnim = false
 			self.el.removeEventListener('webkitAnimationEnd', shake)
