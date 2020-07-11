@@ -37,7 +37,11 @@ export default class SocketManager {
 
   send(data) {
     if (this.socket.readyState == 1) {
-      this.socket.send(JSON.stringify(data))
+      if (data instanceof Blob) {
+        this.socket.send(data)
+      } else {
+        this.socket.send(JSON.stringify(data))
+      }
       return true
     } else {
       return false
