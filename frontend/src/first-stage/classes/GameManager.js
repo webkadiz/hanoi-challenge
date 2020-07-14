@@ -25,9 +25,9 @@ export default class GameManager {
   }
 
   socketOpen() {
-    this.socketManager.send(JSON.stringify({
+    this.socketManager.send({
       create: true
-    }))
+    })
     this.videoStreamManager.init()
   }
 
