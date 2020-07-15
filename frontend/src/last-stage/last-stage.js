@@ -3,25 +3,48 @@ import './last-stage.scss'
 import $ from 'jquery'
 import 'jquery-ui/ui/effects/effect-clip.js'
 import 'jquery-ui/ui/effects/effect-explode.js'
-import socket from './modules/websocket-last-stage'
 
 import { range } from '@/common/utils'
 
+import ServerEventsProvider from './modules/ServerEventsProvider'
+import SocketManager from '../first-stage/classes/SocketManager'
+import {
+	EventEmitter,
+	Factory,
+	Event,
+	List
+} from '@webkadiz/event-emitter'
+
 //import { init } from './modules/firework.js'
+
+const emitter = new EventEmitter(new Factory(Event, List))
+
+new ServerEventsProvider(
+	new SocketManager(
+		new WebSocket('ws://localhost:8081/last-stage'),
+		emitter
+	),
+	emitter
+).launch()
+
 
 let gameScore = 5
 
 const scoreEl = $('.score')
 
+
+
+// for media streaming
 const mediaSourceArray = Array(4).fill(null)
 const sourceBufferArray = Array(4).fill(null)
-const timeRanges = Array(4).fill(0)
 
 const mimeCodec = 'video/webm;codecs=vp8'
 const queueArray = Array(4).fill(null)
 
 const videoElems = document.querySelectorAll('video')
- 
+// for media streaming
+
+
 const flipBtns = $('.flip-btn')
 
 let lastStageIsOpen = false
@@ -51,123 +74,81 @@ for (const i of range(4)) {
 	$('.last-stage-img').eq(i).css('background-image', `url(static/${i}.jpg)`)
 }
 
-
 $('.last-stage').effect('clip', { mode: 'hide'} )
 
 amountAttemptsEl.text(amountAttempts)
 
-// обработчик входящих сообщений
-socket.onmessage = function(event) {
-	let incomingData
-
-	try {
-		incomingData = JSON.parse(event.data)
-	} catch(e) {
-		incomingData = event.data
-	}
-
-  handleIncomingData(incomingData)
-}
 
 
-function handleIncomingData(incomingData) {
+emitter.on('createMediaSource', ({clientIndex}) => {
+	createMediaSource(clientIndex)
+})
 
+emitter.on('appendBuffer', ({buffer, clientIndex}) => {
+	appendBuffer(buffer, clientIndex)	
+})
 
-  if (incomingData.buffer) {
+emitter.on('handleFirstStageGameOver', ({gameOver, additionalScore, clientIndex}) => {
+	handleFirstStageGameOver(gameOver, additionalScore, clientIndex)
+})
 
-  	//console.log(queueArray[incomingData.clientIndex])
-
-  	appendBuffer(incomingData.buffer, incomingData.clientIndex)	
-
-  } else if(incomingData.data.create) {
-  	
-  	createMediaSource(incomingData.clientIndex)
-
-  } else if(incomingData.data.gameOver) {
-
-  	handleFirstStageGameOver(incomingData.data.gameOver, incomingData.clientIndex, incomingData.data.additionalScore)
-
-  }
-
-
-}
 
 
 function appendBuffer(buf, clientIndex) {
-
-	const arrayBuffer = toArrayBuffer(buf.data)
+	const arrayBuffer = new Uint8Array(buf)
 	const sourceBuffer = sourceBufferArray[clientIndex]
 	const mediaSource = mediaSourceArray[clientIndex]
 	const queue = queueArray[clientIndex]
 
-	timeRanges[clientIndex]++
-
-	const timeRange = timeRanges[clientIndex]
-
-
-	// if (timeRange && timeRange % 30 === 0 && sourceBuffer.buffered.length) {
-	// 	sourceBuffer.remove(sourceBuffer.buffered.start(0), sourceBuffer.buffered.end(0) / 2 )
-	// 	console.log(sourceBuffer.buffered.start(0), 'start')
-	// 	console.log(sourceBuffer.buffered.end(0), 'end')
-	// 	console.log(timeRange, 'remove')
-	// }
 
 	if (sourceBuffer.updating || mediaSource.readyState != "open" || queue.length > 0) {
 		queue.push(arrayBuffer)
 	} else {
 		sourceBuffer.appendBuffer(arrayBuffer)
-		
 	}
-	
 
 }
-
-function toArrayBuffer(buf) {
-	const ab = new ArrayBuffer(buf.length)
-	const view = new Uint8Array(ab)
-	for (var i = 0; i < buf.length; ++i) {
-			view[i] = buf[i]
-	}
-	return ab
-}
-
-
-
 
 function createMediaSource(clientIndex) {
 	const videoElem = videoElems[clientIndex]
 	const mediaSource = new MediaSource()
 	const queue = []
 
-
 	mediaSourceArray[clientIndex] = mediaSource
 	queueArray[clientIndex] = queue
 
 	videoElem.src = URL.createObjectURL(mediaSource)
-
+	videoElem.muted = true
 
 	mediaSource.addEventListener('sourceopen', () => {
 		console.log('source open')
-		mediaSource.duration = 1000000000
-
 		const sourceBuffer = mediaSource.addSourceBuffer(mimeCodec)
+		sourceBuffer.mode = 'sequence'
 		sourceBufferArray[clientIndex] = sourceBuffer
 
-		sourceBuffer.addEventListener('updateend', () => {
-			const timeRange = timeRanges[clientIndex]
 
-			if (queue.length > 0 && !sourceBuffer.updating) {
-      			sourceBuffer.appendBuffer(queue.shift());
-    		}
+		sourceBuffer.addEventListener('updateend', () => {
+			if (queue.length > 0) {
+      	sourceBuffer.appendBuffer(queue.shift());
+			}
 		})
 
-		videoElem.play()
+		videoElem.play().then((e) => {
+			console.log('play')
+		}).catch((e) => {
+			return videoElem.play()
+		}).then(() => {
+			console.log('success')
+		}).catch((e) => {
+			debugger
+		})
+
 	})
 
 }
 
 
-function handleFirstStageGameOver(result, clientIndex, additionalScore) {
+function handleFirstStageGameOver(result, additionalScore, clientIndex) {
 
 	gameScore += additionalScore
 	amountGameOver++
