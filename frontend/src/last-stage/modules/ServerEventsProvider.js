@@ -10,7 +10,7 @@ export default class ServerEventsProvider {
     this.emitter.on('socketMessage', (incomingData => {
       if (incomingData.buffer) {
         this.emitter.emit('appendBuffer', {
-          buffer: incomingData.buffer,
+          buffer: incomingData.buffer.data,
           clientIndex: incomingData.clientIndex
         })
       } else if(incomingData.data.create) {
