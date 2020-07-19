@@ -23,7 +23,9 @@ describe("MediaQueue ", () => {
     const dequeueSpy = sinon.spy(mediaQueue, 'dequeue')
 
     // Act
-    mediaQueue.dequeue()
+    try {
+      mediaQueue.dequeue()
+    } catch (e) {}
 
     // Assert
     assert.ok(dequeueSpy.threw("Error"))
