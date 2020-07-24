@@ -36,19 +36,6 @@ let gameScore = 5
 
 const scoreEl = $('.score')
 
-
-
-// for media streaming
-const mediaSourceArray = Array(4).fill(null)
-const sourceBufferArray = Array(4).fill(null)
-
-const mimeCodec = 'video/webm;codecs=vp8'
-const queueArray = Array(4).fill(null)
-
-const videoElems = document.querySelectorAll('video')
-// for media streaming
-
-
 const flipBtns = $('.flip-btn')
 
 let lastStageIsOpen = false
@@ -104,58 +91,6 @@ emitter.on('handleFirstStageGameOver', ({gameOver, additionalScore, clientIndex}
 
 
 
-function appendBuffer(buf, clientIndex) {
-	const arrayBuffer = new Uint8Array(buf)
-	const sourceBuffer = sourceBufferArray[clientIndex]
-	const mediaSource = mediaSourceArray[clientIndex]
-	const queue = queueArray[clientIndex]
-
-
-	if (sourceBuffer.updating || mediaSource.readyState != "open" || queue.length > 0) {
-		queue.push(arrayBuffer)
-	} else {
-		sourceBuffer.appendBuffer(arrayBuffer)
-	}
-
-}
-
-function createMediaSource(clientIndex) {
-	const videoElem = videoElems[clientIndex]
-	const mediaSource = new MediaSource()
-	const queue = []
-
-	mediaSourceArray[clientIndex] = mediaSource
-	queueArray[clientIndex] = queue
-
-	videoElem.src = URL.createObjectURL(mediaSource)
-	videoElem.muted = true
-
-	mediaSource.addEventListener('sourceopen', () => {
-		console.log('source open')
-		const sourceBuffer = mediaSource.addSourceBuffer(mimeCodec)
-		sourceBuffer.mode = 'sequence'
-		sourceBufferArray[clientIndex] = sourceBuffer
-
-
-		sourceBuffer.addEventListener('updateend', () => {
-			if (queue.length > 0) {
-      	sourceBuffer.appendBuffer(queue.shift());
-			}
-		})
-
-		videoElem.play().then((e) => {
-			console.log('play')
-		}).catch((e) => {
-			return videoElem.play()
-		}).then(() => {
-			console.log('success')
-		}).catch((e) => {
-			debugger
-		})
-
-	})
-
-}
 
 
 function handleFirstStageGameOver(result, additionalScore, clientIndex) {
