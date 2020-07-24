@@ -19,6 +19,8 @@ export default class MediaContainer {
   }
 
   appendBufferToMediaSourceBuffer(buffer) {
+    if (!Array.isArray(buffer)) throw new Error("Buffer must be an array")
+    
     this.mediaSourceBuffer.appendBuffer(buffer, this.mediaSourceAdapter.getState())
   }
 

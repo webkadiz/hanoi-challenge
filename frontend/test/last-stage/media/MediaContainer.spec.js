@@ -66,4 +66,24 @@ describe("MediaContainer", () => {
       mediaReceiverSpy.attachSrcObject.calledAfter(createObjectURLSpy)
     );
   });
+
+  it("appendBufferToMediaSourceBuffer call with no array", () => {
+    // Arrange
+    const mediaContainer = new MediaContainer(
+      mediaReceiver,
+      mediaSourceAdapter,
+      mediaSourceBuffer,
+      emitter
+    );
+    const appendBufferSpy = sinon.spy(mediaContainer, "appendBufferToMediaSourceBuffer")
+
+    // Act
+    mediaContainer.init();
+    try {
+      mediaContainer.appendBufferToMediaSourceBuffer(123)
+    } catch (e) {}
+
+    // Assert
+    assert(appendBufferSpy.threw("Error"))
+  })
 });
