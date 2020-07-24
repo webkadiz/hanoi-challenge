@@ -7,7 +7,9 @@
     "cookie": "^0.4.0",
     "ws": "^7.2.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "prettier": "^2.0.5"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
