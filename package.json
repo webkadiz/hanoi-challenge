@@ -1,5 +1,5 @@
 {
-  "name": "hanoe-chellenge",
+  "name": "hanoi-chellenge",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -11,18 +11,17 @@
     "prettier": "^2.0.5"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/webkadiz/hanoe-challenge.git"
+    "url": "git+https://github.com/webkadiz/hanoi-challenge.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/webkadiz/hanoe-challenge/issues"
+    "url": "https://github.com/webkadiz/hanoi-challenge/issues"
   },
-  "homepage": "https://github.com/webkadiz/hanoe-challenge#readme"
+  "homepage": "https://github.com/webkadiz/hanoi-challenge#readme"
 }
