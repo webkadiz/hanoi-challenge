@@ -14,8 +14,12 @@ import {
 	Event,
 	List
 } from '@webkadiz/event-emitter'
-
-//import { init } from './modules/firework.js'
+import MediaList from './modules/media/MediaList'
+import MediaContainer from './modules/media/MediaContainer'
+import MediaReceiver from './modules/media/MediaReceiver'
+import MediaSourceAdapter from './modules/media/MediaSourceAdapter'
+import MediaSourceBuffer from './modules/media/MediaSourceBuffer'
+import MediaQueue from './modules/media/MediaQueue'
 
 const emitter = new EventEmitter(new Factory(Event, List))
 
@@ -79,13 +83,19 @@ $('.last-stage').effect('clip', { mode: 'hide'} )
 amountAttemptsEl.text(amountAttempts)
 
 
+const mediaContainer = new MediaContainer(
+	new MediaReceiver(),
+	new MediaSourceAdapter(new MediaSource(), emitter),
+	new MediaSourceBuffer(new MediaQueue(), emitter),
+	emitter
+)
 
 emitter.on('createMediaSource', ({clientIndex}) => {
-	createMediaSource(clientIndex)
+	mediaContainer.init()
 })
 
 emitter.on('appendBuffer', ({buffer, clientIndex}) => {
-	appendBuffer(buffer, clientIndex)	
+	mediaContainer.appendBufferToMediaSourceBuffer(buffer)
 })
 
 emitter.on('handleFirstStageGameOver', ({gameOver, additionalScore, clientIndex}) => {
