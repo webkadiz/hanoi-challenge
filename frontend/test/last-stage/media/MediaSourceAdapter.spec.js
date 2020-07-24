@@ -1,16 +1,15 @@
-import { assert } from 'chai'
-import sinon from 'sinon'
-import MediaSourceAdapter from '../../../src/last-stage/modules/media/MediaSourceAdapter'
-
+import { assert } from "chai"
+import sinon from "sinon"
+import MediaSourceAdapter from "../../../src/last-stage/modules/media/MediaSourceAdapter"
 
 describe("MediaSourceAdapter", () => {
   let mediaSource, emitter
 
   beforeEach(() => {
     mediaSource = {
-      readyState: 'closed',
+      readyState: "closed",
       addEventListener() {},
-      addSourceBuffer() {}
+      addSourceBuffer() {},
     }
 
     emitter = {
@@ -26,13 +25,18 @@ describe("MediaSourceAdapter", () => {
     // Arrange
     const mediaSourceAdapter = new MediaSourceAdapter(mediaSource, emitter)
     const addEventListenerFake = sinon.fake()
-    sinon.replace(mediaSource, 'addEventListener', addEventListenerFake)
+    sinon.replace(mediaSource, "addEventListener", addEventListenerFake)
 
     // Act
     mediaSourceAdapter.setSourceOpenHandler()
 
     // Assert
-    assert.ok(addEventListenerFake.calledOnceWithExactly('sourceopen', addEventListenerFake.callback))
+    assert.ok(
+      addEventListenerFake.calledOnceWithExactly(
+        "sourceopen",
+        addEventListenerFake.callback
+      )
+    )
   })
 
   it("Emit sourceOpen event", () => {
@@ -40,21 +44,25 @@ describe("MediaSourceAdapter", () => {
     const mediaSourceAdapter = new MediaSourceAdapter(mediaSource, emitter)
     const addEventListenerFake = sinon.fake()
     const emitFake = sinon.fake()
-    sinon.replace(mediaSource, 'addEventListener', addEventListenerFake)
-    sinon.replace(mediaSource, 'addSourceBuffer', sinon.fake.returns('sourceBuffer'))
-    sinon.replace(emitter, 'emit', emitFake)
+    sinon.replace(mediaSource, "addEventListener", addEventListenerFake)
+    sinon.replace(
+      mediaSource,
+      "addSourceBuffer",
+      sinon.fake.returns("sourceBuffer")
+    )
+    sinon.replace(emitter, "emit", emitFake)
 
     // Act
     mediaSourceAdapter.setSourceOpenHandler()
     addEventListenerFake.callback()
 
-    assert.ok(emitFake.calledOnceWithExactly('sourceOpen', 'sourceBuffer'))
+    assert.ok(emitFake.calledOnceWithExactly("sourceOpen", "sourceBuffer"))
   })
 
   it("getOriginal must return original media source instance", () => {
     // Arrange
     const mediaSourceAdapter = new MediaSourceAdapter(mediaSource, emitter)
-    
+
     // Act
     const mediaSourceOriginal = mediaSourceAdapter.getOriginal()
 
@@ -70,6 +78,6 @@ describe("MediaSourceAdapter", () => {
     const state = mediaSourceAdapter.getState()
 
     // Assert
-    assert.equal(state, 'closed')
+    assert.equal(state, "closed")
   })
 })

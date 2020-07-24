@@ -1,4 +1,4 @@
-import $ from 'jquery'
+import $ from "jquery"
 
 export default class MediaReceiver {
   constructor() {
@@ -12,7 +12,7 @@ export default class MediaReceiver {
     this._makeMuted()
   }
 
-  attachSrcObject(srcObject) {  
+  attachSrcObject(srcObject) {
     if (this.videoEl === null) throw new Error("Video element does not set")
     this.videoEl.attr("src", srcObject)
   }
@@ -23,9 +23,11 @@ export default class MediaReceiver {
   }
 
   _findVideoEl() {
-    return $('video').filter(function() {
-      return $(this).data('used') !== true
-    }).eq(0)
+    return $("video")
+      .filter(function () {
+        return $(this).data("used") !== true
+      })
+      .eq(0)
   }
 
   _setVideoEl(videoEl) {
@@ -33,10 +35,10 @@ export default class MediaReceiver {
   }
 
   _makeUsable() {
-    this.videoEl.data('used', true)
+    this.videoEl.data("used", true)
   }
 
   _makeMuted() {
-    this.videoEl.attr('muted', true)
+    this.videoEl.attr("muted", true)
   }
 }

@@ -6,9 +6,9 @@ export default class MediaQueue {
   enqueue(item) {
     this._queue.push(item)
   }
-  
+
   dequeue(item) {
-    if (this.isEmpty()) throw new Error('queue is empty')
+    if (this.isEmpty()) throw new Error("queue is empty")
 
     return this._queue.shift()
   }

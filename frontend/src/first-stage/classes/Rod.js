@@ -1,32 +1,32 @@
 export default class Rod {
-	constructor(amountRings) {
-		this.rings = Array(amountRings).fill(0)
-	}
+  constructor(amountRings) {
+    this.rings = Array(amountRings).fill(0)
+  }
 
-	push(ring) {
-		if (this.rings.every(Boolean)) return
+  push(ring) {
+    if (this.rings.every(Boolean)) return
 
-		this.rings.shiftRight()
-		this.rings[0] = ring
-	}
+    this.rings.shiftRight()
+    this.rings[0] = ring
+  }
 
-	pop() {
-		const topRing = this.rings[0]
+  pop() {
+    const topRing = this.rings[0]
 
-		this.rings.shiftLeft()
+    this.rings.shiftLeft()
 
-		return topRing
-	}
+    return topRing
+  }
 
-	top() {
-		return this.rings[0]
-	}
+  top() {
+    return this.rings[0]
+  }
 
-	len() {
-		return this.rings.length
-	}
+  len() {
+    return this.rings.length
+  }
 
-	isFull() {
-		return this.rings.every(Boolean)
-	}
+  isFull() {
+    return this.rings.every(Boolean)
+  }
 }

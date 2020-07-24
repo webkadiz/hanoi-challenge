@@ -12,7 +12,7 @@ export default class SocketManager {
   }
 
   openHandler(event) {
-    this.emitter.emit('socketOpen', event)
+    this.emitter.emit("socketOpen", event)
   }
 
   messageHandler(event) {
@@ -20,19 +20,19 @@ export default class SocketManager {
 
     try {
       incomingData = JSON.parse(event.data)
-    } catch(e) {
+    } catch (e) {
       incomingData = event.data
     }
 
-    this.emitter.emit('socketMessage', incomingData)
+    this.emitter.emit("socketMessage", incomingData)
   }
 
   closeHandler(event) {
-    this.emitter.emit('socketClose', event)
+    this.emitter.emit("socketClose", event)
   }
 
   errorHandler(event) {
-    this.emitter.emit('socketError', event)
+    this.emitter.emit("socketError", event)
   }
 
   send(data) {

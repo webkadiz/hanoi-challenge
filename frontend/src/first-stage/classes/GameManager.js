@@ -1,5 +1,12 @@
 export default class GameManager {
-  constructor(game, socketManager, videoStreamManager, snowfall, injectorArrayMethods, emitter) {
+  constructor(
+    game,
+    socketManager,
+    videoStreamManager,
+    snowfall,
+    injectorArrayMethods,
+    emitter
+  ) {
     this.game = game
     this.socketManager = socketManager
     this.videoStreamManager = videoStreamManager
@@ -9,11 +16,14 @@ export default class GameManager {
   }
 
   run() {
-    this.emitter.on('socketOpen', this.socketOpen.bind(this))
-    this.emitter.on('socketMessage', this.socketMessage.bind(this))
-    this.emitter.on('socketClose', this.socketClose.bind(this))
-    this.emitter.on('videoStreamDataAvailable', this.videoStreamDataAvailable.bind(this))
-    
+    this.emitter.on("socketOpen", this.socketOpen.bind(this))
+    this.emitter.on("socketMessage", this.socketMessage.bind(this))
+    this.emitter.on("socketClose", this.socketClose.bind(this))
+    this.emitter.on(
+      "videoStreamDataAvailable",
+      this.videoStreamDataAvailable.bind(this)
+    )
+
     this.socketManager.setHandlers()
     this.injectorArrayMethods.inject()
 
@@ -26,30 +36,24 @@ export default class GameManager {
 
   socketOpen() {
     this.socketManager.send({
-      create: true
+      create: true,
     })
     this.videoStreamManager.init()
   }
 
   socketMessage(incomingData) {
-    console.log('income', incomingData)
+    console.log("income", incomingData)
     if (incomingData.reload) {
-
       location.reload()
-    
-    } else if (incomingData.timer === 'start') {
-  
+    } else if (incomingData.timer === "start") {
       this.game.startGame()
-        
-    } else if (incomingData.timer === 'stop') {
-  
+    } else if (incomingData.timer === "stop") {
       this.game.stopGame()
-  
     }
   }
 
   socketClose() {
-    this.emitter.off('videoStreamDataAvailable')
+    this.emitter.off("videoStreamDataAvailable")
     this.game.setOfflineMode()
   }
 

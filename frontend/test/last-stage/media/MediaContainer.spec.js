@@ -1,6 +1,6 @@
-import { assert } from "chai";
-import sinon from "sinon";
-import MediaContainer from "../../../src/last-stage/modules/media/MediaContainer";
+import { assert } from "chai"
+import sinon from "sinon"
+import MediaContainer from "../../../src/last-stage/modules/media/MediaContainer"
 
 describe("MediaContainer", () => {
   let mediaReceiver,
@@ -11,39 +11,39 @@ describe("MediaContainer", () => {
     mediaSourceAdapterSpy,
     mediaSourceBufferSpy,
     emitterSpy,
-    createObjectURLSpy;
+    createObjectURLSpy
 
   beforeEach(() => {
-    URL.createObjectURL = () => {};
+    URL.createObjectURL = () => {}
 
     mediaReceiver = {
       prepareVideoEl() {},
       playVideo() {},
       attachSrcObject() {},
-    };
+    }
 
     mediaSourceAdapter = {
       setSourceOpenHandler() {},
       getOriginal() {},
-    };
+    }
 
     mediaSourceBuffer = {
       appendBuffer() {},
       setSourceBuffer() {},
       setUpdateHandler() {},
-    };
+    }
 
     emitter = {
       on() {},
       emit() {},
-    };
+    }
 
-    mediaReceiverSpy = sinon.spy(mediaReceiver);
-    mediaSourceAdapterSpy = sinon.spy(mediaSourceAdapter);
-    mediaSourceBufferSpy = sinon.spy(mediaSourceBuffer);
-    emitterSpy = sinon.spy(emitter);
-    createObjectURLSpy = sinon.spy(URL, "createObjectURL");
-  });
+    mediaReceiverSpy = sinon.spy(mediaReceiver)
+    mediaSourceAdapterSpy = sinon.spy(mediaSourceAdapter)
+    mediaSourceBufferSpy = sinon.spy(mediaSourceBuffer)
+    emitterSpy = sinon.spy(emitter)
+    createObjectURLSpy = sinon.spy(URL, "createObjectURL")
+  })
 
   it("Init", () => {
     // Arrange
@@ -52,20 +52,20 @@ describe("MediaContainer", () => {
       mediaSourceAdapter,
       mediaSourceBuffer,
       emitter
-    );
+    )
 
     // Act
-    mediaContainer.init();
+    mediaContainer.init()
 
     // Assert
-    assert.isTrue(mediaReceiverSpy.prepareVideoEl.calledOnce);
-    assert.isTrue(mediaSourceAdapterSpy.setSourceOpenHandler.calledOnce);
-    assert.isTrue(emitterSpy.on.calledWith("sourceOpen"));
-    assert.isTrue(createObjectURLSpy.calledOnce);
+    assert.isTrue(mediaReceiverSpy.prepareVideoEl.calledOnce)
+    assert.isTrue(mediaSourceAdapterSpy.setSourceOpenHandler.calledOnce)
+    assert.isTrue(emitterSpy.on.calledWith("sourceOpen"))
+    assert.isTrue(createObjectURLSpy.calledOnce)
     assert.isTrue(
       mediaReceiverSpy.attachSrcObject.calledAfter(createObjectURLSpy)
-    );
-  });
+    )
+  })
 
   it("appendBufferToMediaSourceBuffer call with no array", () => {
     // Arrange
@@ -74,11 +74,14 @@ describe("MediaContainer", () => {
       mediaSourceAdapter,
       mediaSourceBuffer,
       emitter
-    );
-    const appendBufferSpy = sinon.spy(mediaContainer, "appendBufferToMediaSourceBuffer")
+    )
+    const appendBufferSpy = sinon.spy(
+      mediaContainer,
+      "appendBufferToMediaSourceBuffer"
+    )
 
     // Act
-    mediaContainer.init();
+    mediaContainer.init()
     try {
       mediaContainer.appendBufferToMediaSourceBuffer(123)
     } catch (e) {}
@@ -86,4 +89,4 @@ describe("MediaContainer", () => {
     // Assert
     assert(appendBufferSpy.threw("Error"))
   })
-});
+})

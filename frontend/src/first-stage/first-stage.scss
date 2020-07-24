@@ -2,272 +2,282 @@ $base-color: #594306;
 $ring-color: #2b3bed;
 
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html {
-	overflow: hidden;
+  overflow: hidden;
 }
 
-body, html {
-	margin: 0;
-	height: 100%;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-family: 'Roboto', sans-serif;
-	//background: aliceblue;
+body,
+html {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+  //background: aliceblue;
 }
 
 body {
-
-
-	background: hsl(190,70%,30%); 
-  background: -moz-linear-gradient(top, hsl(190,70%,30%) 0%, hsl(190,70%,60%) 100%); /* FF3.6+ */
-  background: -webkit-linear-gradient(top, #f0f9ff 0%, hsl(190,70%,60%) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, hsl(190,70%,30%) 0%, hsl(190,70%,60%) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, hsl(190,70%,30%) 0%, hsl(190,70%,60%) 100%); /* IE10+ */
-  background: linear-gradient(to bottom, hsl(190,70%,30%) 0%, hsl(190,70%,60%) 100%);
-
+  background: hsl(190, 70%, 30%);
+  background: -moz-linear-gradient(
+    top,
+    hsl(190, 70%, 30%) 0%,
+    hsl(190, 70%, 60%) 100%
+  ); /* FF3.6+ */
+  background: -webkit-linear-gradient(
+    top,
+    #f0f9ff 0%,
+    hsl(190, 70%, 60%) 100%
+  ); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(
+    top,
+    hsl(190, 70%, 30%) 0%,
+    hsl(190, 70%, 60%) 100%
+  ); /* Opera 11.10+ */
+  background: -ms-linear-gradient(
+    top,
+    hsl(190, 70%, 30%) 0%,
+    hsl(190, 70%, 60%) 100%
+  ); /* IE10+ */
+  background: linear-gradient(
+    to bottom,
+    hsl(190, 70%, 30%) 0%,
+    hsl(190, 70%, 60%) 100%
+  );
 }
 
 .box {
-	position: relative;
-	width: 75%;
-	height: 75%;
+  position: relative;
+  width: 75%;
+  height: 75%;
 }
 
 .field {
-	position: relative;
-	height: 85%;
+  position: relative;
+  height: 85%;
 }
 
 .floor {
-	background-image: url(img/ice.jpg);
-	height: 35%;
-	width: 100%;
+  background-image: url(img/ice.jpg);
+  height: 35%;
+  width: 100%;
 }
 
 .rod {
-	position: absolute;
-	background: url('img/lollipop1.png');
-	width: 43px;
-	height: 93%;
-	bottom: 0;
-	background-size: cover;
-    background-position: -6px 0px;
-    border-radius: 15px;
+  position: absolute;
+  background: url("img/lollipop1.png");
+  width: 43px;
+  height: 93%;
+  bottom: 0;
+  background-size: cover;
+  background-position: -6px 0px;
+  border-radius: 15px;
 }
 
 .ring {
-	position: absolute;
-	border-radius: 50px;
-	background-image: url(img/snow4.jpg);
-	box-shadow: 0 0 10px rgba(0,0,0,.1);
-	border: 1px solid rgba(0,0,0,.15);
+  position: absolute;
+  border-radius: 50px;
+  background-image: url(img/snow4.jpg);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.15);
 
-	&.shake {
-		animation: shake 0.4s;
-	}
+  &.shake {
+    animation: shake 0.4s;
+  }
 }
 
-.score-box, .best-score-box {
-	font-weight: bold;
-    position: absolute;
-    color: whitesmoke;
-    text-transform: uppercase;
-    left: calc(98% - 85px);
-    top: 40px;
-    font-size: 20px;
+.score-box,
+.best-score-box {
+  font-weight: bold;
+  position: absolute;
+  color: whitesmoke;
+  text-transform: uppercase;
+  left: calc(98% - 85px);
+  top: 40px;
+  font-size: 20px;
 }
 
 .best-score-box {
-	top: 80px;
+  top: 80px;
 }
 
-
-.win, .lose {
-	i {
-		font-size: 5000%;
-	}
+.win,
+.lose {
+  i {
+    font-size: 5000%;
+  }
 }
 
-.win, .lose {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	opacity: 0;
-	pointer-events: none;
-	transform: scale(1.5);
-	transition: .3s;
+.win,
+.lose {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(1.5);
+  transition: 0.3s;
 }
 
-
-.win.active, .lose.active {
-	opacity: 1;
-	transform: scale(1);
+.win.active,
+.lose.active {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .win {
-	i {
-		color: green;
-	}
+  i {
+    color: green;
+  }
 }
 
 .lose {
-	i {
-		color: red;
-	}
+  i {
+    color: red;
+  }
 }
-
 
 .overlay {
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	z-index: 10;
-	background-image: url('img/ice3.jpg');
-	background-repeat: no-repeat;
-	background-size: cover;
-	opacity: 0.3;
-	transform: rotate(180deg);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background-image: url("img/ice3.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.3;
+  transform: rotate(180deg);
 }
 
-
 @keyframes shake {
- 0%,
- 100% {
-  color: red;
-  transform: translateX(0);
- }
- 10%,
- 30%,
- 50%,
- 70%,
- 90% {
-  transform: translateX(-10px);
- }
- 20%,
- 40%,
- 60%,
- 80% {
-  transform: translateX(10px);
- }
+  0%,
+  100% {
+    color: red;
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-10px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(10px);
+  }
 }
 
 .snow-floor {
-	position: absolute;
-    top: 82%;
-    width: 110%;
-    left: -5%;
-    background-image: url(img/snow-floor3.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-    height: 10vw;
+  position: absolute;
+  top: 82%;
+  width: 110%;
+  left: -5%;
+  background-image: url(img/snow-floor3.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 10vw;
 }
-
 
 .level {
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	z-index: 100;
-	background: saddlebrown;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 20vw;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background: saddlebrown;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20vw;
 
-	&-ceil {
-		cursor: pointer;
-		width: 10vw;
-		height: 10vw;
-		background: gold;
-		border-radius: 5px;
-		font-size: 10vw * 0.8;
-		font-weight: bold;
-		line-height: 10vw;
-		text-align: center;
-
-	}
+  &-ceil {
+    cursor: pointer;
+    width: 10vw;
+    height: 10vw;
+    background: gold;
+    border-radius: 5px;
+    font-size: 10vw * 0.8;
+    font-weight: bold;
+    line-height: 10vw;
+    text-align: center;
+  }
 }
 
-
-
-
-
-
-
 .svg-snowscene {
-	position: absolute;
-	left: 0;
-	top: 0;
-  	width: 100%;
-	height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .snow {
-  fill: #fff; 
+  fill: #fff;
   animation-name: snowing;
   animation-duration: 20s;
   animation-iteration-count: infinite;
   animation-timing-function: ease-out;
 
-  &:nth-child(2n){
+  &:nth-child(2n) {
     animation-delay: 10s;
   }
-  &:nth-child(3n){
+  &:nth-child(3n) {
     animation-delay: 15s;
     animation-duration: 22s;
   }
-  &:nth-child(4n){
+  &:nth-child(4n) {
     animation-delay: 5.25s;
     animation-duration: 21s;
   }
-  &:nth-child(5n){
+  &:nth-child(5n) {
     animation-delay: 18.6s;
   }
-  &:nth-child(6n){
+  &:nth-child(6n) {
     animation-delay: 9.6s;
   }
-  &:nth-child(7n){
+  &:nth-child(7n) {
     animation-delay: 12.6s;
   }
 }
 
 @keyframes snowing {
-  0%{  }
-  100% { 
-    
+  0% {
+  }
+  100% {
     transform: translateY(100%);
   }
 }
 
 .snowfall {
-	position: absolute;
-	z-index: -1
+  position: absolute;
+  z-index: -1;
 }
 
 .glow {
-	transition: .6s;
-	opacity: 0;
-    background: linear-gradient(0, green -100%, transparent);
-    position: absolute;
-    bottom: 0;
-    filter: blur(12px);
-    z-index: -1;
+  transition: 0.6s;
+  opacity: 0;
+  background: linear-gradient(0, green -100%, transparent);
+  position: absolute;
+  bottom: 0;
+  filter: blur(12px);
+  z-index: -1;
 }
 
 .glow.active {
-	opacity: 1;	
+  opacity: 1;
 }

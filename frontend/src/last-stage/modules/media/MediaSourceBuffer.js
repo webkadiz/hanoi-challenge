@@ -9,7 +9,7 @@ export default class MediaSourceBuffer {
   }
 
   setUpdateHandler() {
-    this.sourceBuffer.addEventListener('updateend', () => {
+    this.sourceBuffer.addEventListener("updateend", () => {
       if (this.mediaQueue.isNotEmpty()) {
         this.sourceBuffer.appendBuffer(this.mediaQueue.dequeue())
       }
@@ -18,14 +18,18 @@ export default class MediaSourceBuffer {
 
   appendBuffer(buffer, mediaSourceState) {
     if (this.sourceBuffer === null) throw new Error("should set source buffer")
-    
+
     buffer = this._prepareBuffer(buffer)
-    
-    if (this.sourceBuffer.updating || mediaSourceState != "open" || this.mediaQueue.isNotEmpty()) {
+
+    if (
+      this.sourceBuffer.updating ||
+      mediaSourceState != "open" ||
+      this.mediaQueue.isNotEmpty()
+    ) {
       this.mediaQueue.enqueue(buffer)
     } else {
       this.sourceBuffer.appendBuffer(buffer)
-    }   
+    }
   }
 
   _prepareBuffer(buffer) {

@@ -1,29 +1,29 @@
-import Ring from './Ring.js'
+import Ring from "./Ring.js"
 
 export default class ActiveRing {
-	ring = false
+  ring = false
 
-	get() {
-		return this.ring
-	}
+  get() {
+    return this.ring
+  }
 
-	set(ring) {
-		if (ring instanceof Ring) {
-			this.ring = ring
-		} else {
-			throw new Error('ring mus be instance of Ring')
-		}
-	}
+  set(ring) {
+    if (ring instanceof Ring) {
+      this.ring = ring
+    } else {
+      throw new Error("ring mus be instance of Ring")
+    }
+  }
 
-	exists() {
-		return this.ring !== false
-	}
+  exists() {
+    return this.ring !== false
+  }
 
-	empty() {
-		return this.ring === false
-	}
+  empty() {
+    return this.ring === false
+  }
 
-	unset() {
-		this.ring = false
-	}
+  unset() {
+    this.ring = false
+  }
 }

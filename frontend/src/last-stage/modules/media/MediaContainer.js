@@ -11,7 +11,7 @@ export default class MediaContainer {
     this.mediaReceiver.prepareVideoEl()
     this.mediaSourceAdapter.setSourceOpenHandler()
     this._setSourceOpenHandler()
-    
+
     this._createSrcObject()
     this._attachSrcObjectToMediaReceiver()
 
@@ -20,12 +20,15 @@ export default class MediaContainer {
 
   appendBufferToMediaSourceBuffer(buffer) {
     if (!Array.isArray(buffer)) throw new Error("Buffer must be an array")
-    
-    this.mediaSourceBuffer.appendBuffer(buffer, this.mediaSourceAdapter.getState())
+
+    this.mediaSourceBuffer.appendBuffer(
+      buffer,
+      this.mediaSourceAdapter.getState()
+    )
   }
 
   _setSourceOpenHandler() {
-    this.emitter.on('sourceOpen', sourceBuffer => {
+    this.emitter.on("sourceOpen", (sourceBuffer) => {
       this.mediaSourceBuffer.setSourceBuffer(sourceBuffer)
       this.mediaSourceBuffer.setUpdateHandler()
     })
@@ -34,7 +37,7 @@ export default class MediaContainer {
   _createSrcObject() {
     this.srcObject = URL.createObjectURL(this.mediaSourceAdapter.getOriginal())
   }
-  
+
   _attachSrcObjectToMediaReceiver() {
     this.mediaReceiver.attachSrcObject(this.srcObject)
   }

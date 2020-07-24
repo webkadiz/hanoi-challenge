@@ -1,61 +1,71 @@
 @font-face {
- font-family: "Bender";
- src        : local("Bender Light"), local("Bender-Light"), url("fonts/benderlight.woff2") format("woff2"),
-  url("fonts/benderlight.woff") format("woff"), url("fonts/benderlight.ttf") format("truetype");
- font-weight: 300;
- font-style : normal;
+  font-family: "Bender";
+  src: local("Bender Light"), local("Bender-Light"),
+    url("fonts/benderlight.woff2") format("woff2"),
+    url("fonts/benderlight.woff") format("woff"),
+    url("fonts/benderlight.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
 }
 @font-face {
- font-family: "Bender";
- src        : local("Bender Light Italic"), local("Bender-LightItalic"),
-  url("fonts/benderlightitalic.woff2") format("woff2"),
-  url("fonts/benderlightitalic.woff") format("woff"),
-  url("fonts/benderlightitalic.ttf") format("truetype");
- font-weight: 300;
- font-style : italic;
+  font-family: "Bender";
+  src: local("Bender Light Italic"), local("Bender-LightItalic"),
+    url("fonts/benderlightitalic.woff2") format("woff2"),
+    url("fonts/benderlightitalic.woff") format("woff"),
+    url("fonts/benderlightitalic.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
 }
 @font-face {
- font-family: "Bender";
- src        : local("Bender"), url("fonts/bender.woff2") format("woff2"),
-  url("fonts/bender.woff") format("woff"), url("fonts/bender.ttf") format("truetype");
- font-weight: 400;
- font-style : normal;
+  font-family: "Bender";
+  src: local("Bender"), url("fonts/bender.woff2") format("woff2"),
+    url("fonts/bender.woff") format("woff"),
+    url("fonts/bender.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
 }
 @font-face {
- font-family: "Bender";
- src        : local("Bender Italic"), local("Bender-Italic"), url("fonts/benderitalic.woff2") format("woff2"),
-  url("fonts/benderitalic.woff") format("woff"), url("fonts/benderitalic.ttf") format("truetype");
- font-weight: 400;
- font-style : italic;
+  font-family: "Bender";
+  src: local("Bender Italic"), local("Bender-Italic"),
+    url("fonts/benderitalic.woff2") format("woff2"),
+    url("fonts/benderitalic.woff") format("woff"),
+    url("fonts/benderitalic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
 }
 @font-face {
- font-family: "Bender";
- src        : local("Bender Bold"), local("Bender-Bold"), url("fonts/benderbold.woff2") format("woff2"),
-  url("fonts/benderbold.woff") format("woff"), url("fonts/benderbold.ttf") format("truetype");
- font-weight: 700;
- font-style : normal;
+  font-family: "Bender";
+  src: local("Bender Bold"), local("Bender-Bold"),
+    url("fonts/benderbold.woff2") format("woff2"),
+    url("fonts/benderbold.woff") format("woff"),
+    url("fonts/benderbold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
 }
 @font-face {
- font-family: "Bender";
- src        : local("Bender Bold Italic"), local("Bender-BoldItalic"),
-  url("fonts/benderbolditalic.woff2") format("woff2"), url("fonts/benderbolditalic.woff") format("woff"),
-  url("fonts/benderbolditalic.ttf") format("truetype");
- font-weight: 700;
- font-style : italic;
+  font-family: "Bender";
+  src: local("Bender Bold Italic"), local("Bender-BoldItalic"),
+    url("fonts/benderbolditalic.woff2") format("woff2"),
+    url("fonts/benderbolditalic.woff") format("woff"),
+    url("fonts/benderbolditalic.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
 }
 @font-face {
- font-family: "Bender";
- src        : local("Bender Black"), local("Bender-Black"), url("fonts/benderblack.woff2") format("woff2"),
-  url("fonts/benderblack.woff") format("woff"), url("fonts/benderblack.ttf") format("truetype");
- font-weight: 900;
- font-style : normal;
+  font-family: "Bender";
+  src: local("Bender Black"), local("Bender-Black"),
+    url("fonts/benderblack.woff2") format("woff2"),
+    url("fonts/benderblack.woff") format("woff"),
+    url("fonts/benderblack.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
 }
 @font-face {
- font-family: "Bender";
- src        : local("Bender Black Italic"), local("Bender-BlackItalic"),
-  url("fonts/benderblackitalic.woff2") format("woff2"),
-  url("fonts/benderblackitalic.woff") format("woff"),
-  url("fonts/benderblackitalic.ttf") format("truetype");
- font-weight: 900;
- font-style : italic;
+  font-family: "Bender";
+  src: local("Bender Black Italic"), local("Bender-BlackItalic"),
+    url("fonts/benderblackitalic.woff2") format("woff2"),
+    url("fonts/benderblackitalic.woff") format("woff"),
+    url("fonts/benderblackitalic.ttf") format("truetype");
+  font-weight: 900;
+  font-style: italic;
 }

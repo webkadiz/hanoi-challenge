@@ -1,48 +1,43 @@
-import $ from 'jquery'
+import $ from "jquery"
 
 export default class LevelManager {
-	constructor(screen, gameLevels, emitter) {
-		this.gameLevels = gameLevels
-		this.gameLevelIndex = -1
-		this.emitter = emitter
-		this.screen = screen
-	}
+  constructor(screen, gameLevels, emitter) {
+    this.gameLevels = gameLevels
+    this.gameLevelIndex = -1
+    this.emitter = emitter
+    this.screen = screen
+  }
 
+  createScreen() {
+    this.gameLevels.forEach((level, i) =>
+      this.screen.append(this.createCeil(i))
+    )
+  }
 
-	createScreen() {
+  createCeil(gameLevelIndex) {
+    const gameLevelNumber = this.calcIndexNumber(gameLevelIndex)
+    const ceil = $(`<div class="level-ceil">${gameLevelNumber}</div>`)
 
-		this.gameLevels.forEach((level, i) => this.screen.append(this.createCeil(i)))
+    ceil.click(() => {
+      this.gameLevelIndex = gameLevelIndex
 
-	}	
+      this.screen.hide()
 
-	createCeil(gameLevelIndex) {
-		const gameLevelNumber = this.calcIndexNumber(gameLevelIndex)
-		const ceil = $(`<div class="level-ceil">${gameLevelNumber}</div>`)
+      this.setGameLevel()
+    })
 
-		ceil.click(() => {
-			this.gameLevelIndex = gameLevelIndex
+    return ceil
+  }
 
-			this.screen.hide()
+  calcIndexNumber(gameLevelIndex) {
+    return gameLevelIndex + 1
+  }
 
-			this.setGameLevel()
-		})
+  getGameLevel() {
+    return this.gameLevels[this.gameLevelIndex]
+  }
 
-		return ceil
-	}
-
-	calcIndexNumber(gameLevelIndex) {
-		return gameLevelIndex + 1
-	}
-
-	getGameLevel() {
-		return this.gameLevels[this.gameLevelIndex]
-	}
-
-	setGameLevel() {
-
-		this.emitter.emit('setGameLevel', this.getGameLevel())
-
-	}
-
-
+  setGameLevel() {
+    this.emitter.emit("setGameLevel", this.getGameLevel())
+  }
 }

@@ -1,80 +1,78 @@
-import $ from 'jquery'
-import { float } from '@/common/utils'
+import $ from "jquery"
+import { float } from "@/common/utils"
 
 export default class Ring {
-	
-	constructor() {
-		this.isInAnim = false
-		this.el = false
-		this.appended = false
-	}
+  constructor() {
+    this.isInAnim = false
+    this.el = false
+    this.appended = false
+  }
 
-	createElement() {
-		if(this.el) return
+  createElement() {
+    if (this.el) return
 
-		this.el = $('<div class="ring"></div>')[0]
-	}
+    this.el = $('<div class="ring"></div>')[0]
+  }
 
-	insertInDocument() {
-		if (this.appended) return
-		
-		$('.field').append(this.el)
-		this.appended = true
-	}
+  insertInDocument() {
+    if (this.appended) return
 
-	bindJqueryFunctions() {
-		this.css = $().css.bind($(this.el))
-		this.animateBind = $().animate.bind($(this.el))
-	}
+    $(".field").append(this.el)
+    this.appended = true
+  }
 
-	animate(styles, props = {}) {
-		this.isInAnim = true
-		this.animateBind(styles, {
-			complete: () => this.isInAnim = false,
-			...props
-		})
-	}
+  bindJqueryFunctions() {
+    this.css = $().css.bind($(this.el))
+    this.animateBind = $().animate.bind($(this.el))
+  }
 
-	shake() {
-		const self = this
-		
-		this.isInAnim = true
+  animate(styles, props = {}) {
+    this.isInAnim = true
+    this.animateBind(styles, {
+      complete: () => (this.isInAnim = false),
+      ...props,
+    })
+  }
 
-		this.el.classList.add('shake')
+  shake() {
+    const self = this
 
-		this.el.addEventListener('webkitAnimationEnd', function shake() {
-			self.el.classList.remove('shake')
-			self.isInAnim = false
-			self.el.removeEventListener('webkitAnimationEnd', shake)
-		})
-	}
+    this.isInAnim = true
 
+    this.el.classList.add("shake")
 
-	get left() {
-		return float(this.css('left'))
-	}
-	set left(value) {
-		return this.css('left', value)
-	}
+    this.el.addEventListener("webkitAnimationEnd", function shake() {
+      self.el.classList.remove("shake")
+      self.isInAnim = false
+      self.el.removeEventListener("webkitAnimationEnd", shake)
+    })
+  }
 
-	get bottom() {
-		return float(this.css('bottom'))
-	}
-	set bottom(value) {
-		return this.css('bottom', value)
-	}
+  get left() {
+    return float(this.css("left"))
+  }
+  set left(value) {
+    return this.css("left", value)
+  }
 
-	get width() {
-		return float(this.css('width'))
-	}
-	set width(value) {
-		return this.css('width', value)
-	}
+  get bottom() {
+    return float(this.css("bottom"))
+  }
+  set bottom(value) {
+    return this.css("bottom", value)
+  }
 
-	get height() {
-		return float(this.css('height'))
-	}
-	set height(value) {
-		return this.css('height', value)
-	}
+  get width() {
+    return float(this.css("width"))
+  }
+  set width(value) {
+    return this.css("width", value)
+  }
+
+  get height() {
+    return float(this.css("height"))
+  }
+  set height(value) {
+    return this.css("height", value)
+  }
 }

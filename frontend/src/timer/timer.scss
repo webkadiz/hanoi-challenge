@@ -1,108 +1,106 @@
 html,
 body {
- font-size: 10px;
- margin: 0;
- height: 100%;
- font-family: "Roboto", sans-serif;
- perspective: 1000px;
- overflow: hidden;
- font-family: "Bender";
+  font-size: 10px;
+  margin: 0;
+  height: 100%;
+  font-family: "Roboto", sans-serif;
+  perspective: 1000px;
+  overflow: hidden;
+  font-family: "Bender";
 }
 
 .page {
-	position: relative;
- height: 100%;
- width: 100%;
- display: flex;
- align-items: center;
- justify-content: center;
- background: black;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: black;
 }
 
-
 .main {
- transform-style: preserve-3d;
- height: 100%;
+  transform-style: preserve-3d;
+  height: 100%;
 }
 
 .result {
- position: absolute;
- left: 0;
- top: 0;
- bottom: 0;
- right: 0;
- display: flex;
- align-items: center;
- justify-content: center;
- transform: rotateY(180deg);
- font-size: 25rem;
- text-align: center;
- font-weight: bold;
- color: #009914;
- transition: color 0.3s;
- user-select: none;
- backface-visibility: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotateY(180deg);
+  font-size: 25rem;
+  text-align: center;
+  font-weight: bold;
+  color: #009914;
+  transition: color 0.3s;
+  user-select: none;
+  backface-visibility: hidden;
 }
 
 .timer {
- font-size: 23rem;
- text-align: center;
- letter-spacing: 15px;
- font-weight: bold;
- color: #009914;
- transition: color 0.3s;
- user-select: none;
- backface-visibility: hidden;
- text-shadow: 0 0 30px green
+  font-size: 23rem;
+  text-align: center;
+  letter-spacing: 15px;
+  font-weight: bold;
+  color: #009914;
+  transition: color 0.3s;
+  user-select: none;
+  backface-visibility: hidden;
+  text-shadow: 0 0 30px green;
 }
 
 .timer.end {
- animation: scale 1s infinite linear;
+  animation: scale 1s infinite linear;
 }
 
 .code {
- font-size: 6rem;
- margin-top: 20vh;
- display: flex;
- justify-content: center;
- color: #5f6362;
- backface-visibility: hidden;
+  font-size: 6rem;
+  margin-top: 20vh;
+  display: flex;
+  justify-content: center;
+  color: #5f6362;
+  backface-visibility: hidden;
 }
 
 .code.error {
- animation: error 0.4s;
+  animation: error 0.4s;
 }
 
-
 @keyframes error {
- 0%,
- 100% {
-  color: red;
-  transform: translateX(0);
- }
- 10%,
- 30%,
- 50%,
- 70%,
- 90% {
-  transform: translateX(-10px);
- }
- 20%,
- 40%,
- 60%,
- 80% {
-	transform: translateX(10px);
- }
+  0%,
+  100% {
+    color: red;
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-10px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(10px);
+  }
 }
 
 @keyframes scale {
- 0% {
-  transform: scale(1);
- }
- 50% {
-  transform: scale(1.2);
- }
- 100% {
-  transform: scale(1);
- }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

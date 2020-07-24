@@ -1,7 +1,7 @@
-import { assert } from "chai";
-import sinon from "sinon";
-import $ from 'jquery'
-import MediaReceiver from "../../../src/last-stage/modules/media/MediaReceiver";
+import { assert } from "chai"
+import sinon from "sinon"
+import $ from "jquery"
+import MediaReceiver from "../../../src/last-stage/modules/media/MediaReceiver"
 
 describe("MediaReveiver", () => {
   beforeEach(() => {
@@ -17,18 +17,18 @@ describe("MediaReveiver", () => {
         <video></video>
         <video></video>
       </div>
-    `);
+    `)
     const mediaReceiver = new MediaReceiver()
 
     // Act
     mediaReceiver.prepareVideoEl()
 
     // Assert
-    assert.isTrue($('video').eq(0).data('used'))
-    assert.equal($('video').eq(0).attr('muted'), "true")
-    assert.isUndefined($('video').eq(1).data('used'))
-    assert.isUndefined($('video').eq(1).attr('muted'))
-  });
+    assert.isTrue($("video").eq(0).data("used"))
+    assert.equal($("video").eq(0).attr("muted"), "true")
+    assert.isUndefined($("video").eq(1).data("used"))
+    assert.isUndefined($("video").eq(1).attr("muted"))
+  })
 
   it("Prepare two element", () => {
     // Arrange
@@ -39,7 +39,7 @@ describe("MediaReveiver", () => {
         <video></video>
         <video></video>
       </div>
-    `);
+    `)
     const mediaReceiver = new MediaReceiver()
 
     // Act
@@ -47,10 +47,10 @@ describe("MediaReveiver", () => {
     mediaReceiver.prepareVideoEl()
 
     // Assert
-    assert.isTrue($('video').eq(0).data('used'))
-    assert.equal($('video').eq(0).attr('muted'), "true")
-    assert.isTrue($('video').eq(1).data('used'))
-    assert.equal($('video').eq(1).attr('muted'), "true")
+    assert.isTrue($("video").eq(0).data("used"))
+    assert.equal($("video").eq(0).attr("muted"), "true")
+    assert.isTrue($("video").eq(1).data("used"))
+    assert.equal($("video").eq(1).attr("muted"), "true")
   })
 
   it("Attach src object", () => {
@@ -64,7 +64,7 @@ describe("MediaReveiver", () => {
     mediaReceiver.attachSrcObject(srcObject)
 
     // Assert
-    assert.equal($('video').attr('src'), srcObject)
+    assert.equal($("video").attr("src"), srcObject)
   })
 
   it("Attach src object without prepare", () => {
@@ -115,4 +115,4 @@ describe("MediaReveiver", () => {
     // Assert
     assert.isTrue(playSpy.threw("Error"))
   })
-});
+})

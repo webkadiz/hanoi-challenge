@@ -6,9 +6,9 @@ export default class MediaSourceAdapter {
   }
 
   setSourceOpenHandler() {
-    this.mediaSource.addEventListener('sourceopen', () => {
+    this.mediaSource.addEventListener("sourceopen", () => {
       const sourceBuffer = this.mediaSource.addSourceBuffer(this.mimeCodec)
-      this.emitter.emit('sourceOpen', sourceBuffer)
+      this.emitter.emit("sourceOpen", sourceBuffer)
     })
   }
 

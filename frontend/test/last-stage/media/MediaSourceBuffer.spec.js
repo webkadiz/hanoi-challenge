@@ -1,6 +1,6 @@
-import { assert } from 'chai'
-import sinon from 'sinon'
-import MediaSourceBuffer from '../../../src/last-stage/modules/media/MediaSourceBuffer'
+import { assert } from "chai"
+import sinon from "sinon"
+import MediaSourceBuffer from "../../../src/last-stage/modules/media/MediaSourceBuffer"
 
 describe("MediaSourceBuffer", () => {
   let mediaQueue, sourceBuffer
@@ -21,10 +21,10 @@ describe("MediaSourceBuffer", () => {
   })
 
   it("Call appendBuffer without source buffer", () => {
-    // Arrange 
+    // Arrange
     const mediaSourceBuffer = new MediaSourceBuffer(mediaQueue)
-    const appendBufferSpy = sinon.spy(mediaSourceBuffer, 'appendBuffer')
-    
+    const appendBufferSpy = sinon.spy(mediaSourceBuffer, "appendBuffer")
+
     // Act
     try {
       mediaSourceBuffer.appendBuffer([1, 2, 3], "open")
@@ -35,62 +35,62 @@ describe("MediaSourceBuffer", () => {
   })
 
   it("appendBuffer with not empty queue", () => {
-    // Arrange 
+    // Arrange
     const mediaSourceBuffer = new MediaSourceBuffer(mediaQueue)
-    const enqueueSpy = sinon.spy(mediaQueue, 'enqueue')
-    sinon.replace(mediaQueue, 'isNotEmpty', sinon.fake.returns(true))
-    sinon.replace(sourceBuffer, 'updating', false)
-    
+    const enqueueSpy = sinon.spy(mediaQueue, "enqueue")
+    sinon.replace(mediaQueue, "isNotEmpty", sinon.fake.returns(true))
+    sinon.replace(sourceBuffer, "updating", false)
+
     // Act
     mediaSourceBuffer.setSourceBuffer(sourceBuffer)
-    mediaSourceBuffer.appendBuffer([1,2,3], "open")
-    
+    mediaSourceBuffer.appendBuffer([1, 2, 3], "open")
+
     // Assert
     assert.ok(enqueueSpy.calledOnce)
   })
 
   it("appendBuffer with updating true", () => {
-    // Arrange 
+    // Arrange
     const mediaSourceBuffer = new MediaSourceBuffer(mediaQueue)
     const enqueueSpy = sinon.spy(mediaQueue, "enqueue")
-    sinon.replace(mediaQueue, 'isNotEmpty', sinon.fake.returns(false))
-    sinon.replace(sourceBuffer, 'updating', true)
-    
+    sinon.replace(mediaQueue, "isNotEmpty", sinon.fake.returns(false))
+    sinon.replace(sourceBuffer, "updating", true)
+
     // Act
     mediaSourceBuffer.setSourceBuffer(sourceBuffer)
-    mediaSourceBuffer.appendBuffer([1,2,3], "open")
-    
+    mediaSourceBuffer.appendBuffer([1, 2, 3], "open")
+
     // Assert
     assert.ok(enqueueSpy.calledOnce)
   })
 
   it("appendBuffer with closed media source", () => {
-    // Arrange 
+    // Arrange
     const mediaSourceBuffer = new MediaSourceBuffer(mediaQueue)
     const enqueueSpy = sinon.spy(mediaQueue, "enqueue")
-    sinon.replace(mediaQueue, 'isNotEmpty', sinon.fake.returns(false))
-    sinon.replace(sourceBuffer, 'updating', false)
- 
+    sinon.replace(mediaQueue, "isNotEmpty", sinon.fake.returns(false))
+    sinon.replace(sourceBuffer, "updating", false)
+
     // Act
     mediaSourceBuffer.setSourceBuffer(sourceBuffer)
-    mediaSourceBuffer.appendBuffer([1,2,3], "closed")
-    
+    mediaSourceBuffer.appendBuffer([1, 2, 3], "closed")
+
     // Assert
     assert(enqueueSpy.calledOnce)
   })
 
   it("appendBuffer with empty queue, not updating, with open media source", () => {
-    // Arrange 
+    // Arrange
     const mediaSourceBuffer = new MediaSourceBuffer(mediaQueue)
     const enqueueSpy = sinon.spy(mediaQueue, "enqueue")
     const appendsBufferSpy = sinon.spy(sourceBuffer, "appendBuffer")
-    sinon.replace(mediaQueue, 'isNotEmpty', sinon.fake.returns(false))
-    sinon.replace(sourceBuffer, 'updating', false)
+    sinon.replace(mediaQueue, "isNotEmpty", sinon.fake.returns(false))
+    sinon.replace(sourceBuffer, "updating", false)
 
     // Act
     mediaSourceBuffer.setSourceBuffer(sourceBuffer)
-    mediaSourceBuffer.appendBuffer([1,2,3], "open")
-    
+    mediaSourceBuffer.appendBuffer([1, 2, 3], "open")
+
     // Assert
     assert.ok(enqueueSpy.notCalled)
     assert.ok(appendsBufferSpy.calledOnce)
@@ -99,8 +99,11 @@ describe("MediaSourceBuffer", () => {
   it("setUpdateHandler", () => {
     // Arrange
     const mediaSourceBuffer = new MediaSourceBuffer(mediaQueue)
-    const sourceBufferAddEventListenerFake = 
-      sinon.replace(sourceBuffer, "addEventListener", sinon.fake())
+    const sourceBufferAddEventListenerFake = sinon.replace(
+      sourceBuffer,
+      "addEventListener",
+      sinon.fake()
+    )
     sinon
 
     // Act
@@ -109,8 +112,11 @@ describe("MediaSourceBuffer", () => {
 
     // Assert
     assert.ok(sourceBufferAddEventListenerFake.calledOnce)
-    assert.ok(sourceBufferAddEventListenerFake.
-      calledWithExactly("updateend", sourceBufferAddEventListenerFake.callback)
+    assert.ok(
+      sourceBufferAddEventListenerFake.calledWithExactly(
+        "updateend",
+        sourceBufferAddEventListenerFake.callback
+      )
     )
   })
 })
