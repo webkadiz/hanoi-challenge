@@ -90,9 +90,6 @@ emitter.on('handleFirstStageGameOver', ({gameOver, additionalScore, clientIndex}
 })
 
 
-
-
-
 function handleFirstStageGameOver(result, additionalScore, clientIndex) {
 
 	gameScore += additionalScore
@@ -118,9 +115,6 @@ function handleFirstStageGameOver(result, additionalScore, clientIndex) {
 	})
 }
 
-
-
-
 function addLetter(letter) {
 
 	for (const input of inputs) {
@@ -131,7 +125,6 @@ function addLetter(letter) {
 	}
 
 }
-
 
 function removeLastLetter() {
 
@@ -147,7 +140,6 @@ function removeLastLetter() {
 function isLetter(letter) {
 	return ~'абвгдеёжзийклмнопрстучфцхшщьъыюяэ'.indexOf(letter)
 }
-
 
 function handleAttempt() {
 	if (inputs[inputs.length - 1].textContent) {
@@ -166,10 +158,6 @@ function handleAttempt() {
 		console.log(word)
 	}
 }
-
-
-
-
 
 function loseAttempt() {
 
@@ -193,45 +181,24 @@ function loseAttempt() {
 	
 }
 
-
 function gameOver() {
 	console.log('win')
 	$(window).off('keyup')
 
-
-
-	
-
-	
-
-
 	setTimeout(() => {
-
-
 		gradientAnimation()
 
-		
-
 		setTimeout(() => {
-
-
 			scoreEl.text(gameScore)
 			scoreEl.addClass('animation')
 
 			setTimeout(() => import('./modules/firework.js'), 4500)
 
 		}, 4000)
-
 	}, 1000)
-
-
-
-
 }
 
-
 function gradientAnimation() {
-
 	let iter = 0
 
 	const interval = setInterval(() => {
@@ -244,20 +211,13 @@ function gradientAnimation() {
 			clearInterval(interval)
 		}
 
-
 		iter++
-
 	}, 10)
-
 }
-
-
 
 $(window).keyup(e => {
 
 	if (inAnim) return
-
-	console.log(e)
 	const letter = e.key.toLowerCase()
 
 	if (e.key === 'Enter') {
@@ -270,21 +230,13 @@ $(window).keyup(e => {
 	} else if (e.key === 'Backspace') {
 
 		if (lastStageIsOpen) {
-
 			removeLastLetter()
-
 		}
-
 	} else {
-
 		if (lastStageIsOpen && isLetter(letter)) {
-
 			addLetter(letter)
-
 			handleAttempt()
-
 		}
-
 	}
 })
 
