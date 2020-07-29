@@ -20,6 +20,8 @@ export default class MediaReceiver {
   playVideo() {
     if (this.videoEl === null) throw new Error("Video element does not set")
     this.videoEl.get(0).play()
+      .then(() => {})
+      .catch(() => {})
   }
 
   _findVideoEl() {
