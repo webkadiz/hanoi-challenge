@@ -24,6 +24,10 @@ export default class MediaReceiver {
       .catch(() => {})
   }
 
+  isPaused() {
+    return this.videoEl.get(0).paused
+  }
+
   _findVideoEl() {
     return $("video")
       .filter(function () {

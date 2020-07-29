@@ -20,6 +20,9 @@ export default class MediaContainer {
 
   appendBufferToMediaSourceBuffer(buffer) {
     if (!Array.isArray(buffer)) throw new Error("Buffer must be an array")
+    if (this.mediaReceiver.isPaused()) {
+      this.mediaReceiver.playVideo()
+    }
 
     this.mediaSourceBuffer.appendBuffer(
       buffer,
