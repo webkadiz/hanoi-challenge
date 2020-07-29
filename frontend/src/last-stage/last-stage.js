@@ -56,19 +56,23 @@ $(".last-stage").effect("clip", { mode: "hide" })
 
 amountAttemptsEl.text(amountAttempts)
 
-const mediaContainer = new MediaContainer(
-  new MediaReceiver(),
-  new MediaSourceAdapter(new MediaSource(), emitter),
-  new MediaSourceBuffer(new MediaQueue(), emitter),
-  emitter
-)
+const mediaList = new MediaList()
 
 emitter.on("createMediaSource", ({ clientIndex }) => {
+  const mediaContainer = new MediaContainer(
+    new MediaReceiver(),
+    new MediaSourceAdapter(new MediaSource(), emitter),
+    new MediaSourceBuffer(new MediaQueue(), emitter),
+    emitter
+  )
+
   mediaContainer.init()
+
+  mediaList.insert(clientIndex, mediaContainer)
 })
 
 emitter.on("appendBuffer", ({ buffer, clientIndex }) => {
-  mediaContainer.appendBufferToMediaSourceBuffer(buffer)
+  mediaList.eq(clientIndex).appendBufferToMediaSourceBuffer(buffer)
 })
 
 emitter.on(
