@@ -21,7 +21,7 @@ export default class LevelManager {
     ceil.click(() => {
       this.gameLevelIndex = gameLevelIndex
 
-      this.screen.hide()
+      this.hideScreen()
 
       this.setGameLevel()
     })
@@ -39,5 +39,13 @@ export default class LevelManager {
 
   setGameLevel() {
     this.emitter.emit("setGameLevel", this.getGameLevel())
+  }
+
+  hideScreen() {
+    this.screen.hide()
+  }
+
+  showScreen() {
+    this.screen.show()
   }
 }
