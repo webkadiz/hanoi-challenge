@@ -1,7 +1,6 @@
 const http = require("http")
 const WebSocket = require("ws")
 const url = require("url")
-const cookie = require("cookie")
 
 const server = http.createServer()
 
@@ -9,52 +8,16 @@ const firstStageSocket = new WebSocket.Server({ noServer: true })
 const lastStageSocket = new WebSocket.Server({ noServer: true })
 const timerSocket = new WebSocket.Server({ noServer: true })
 
-const cookieExpires = 60 * 60 * 24 * 7 * 2
-
 let timerClient
 let lastStageClient
 let firstStageClients = Array(4).fill(null)
-let webSocketKeyTable = {}
-
-firstStageSocket.on("headers", (headers, req) => {
-  const cookieParsed = cookie.parse(req.headers.cookie || "")
-  const cliendIndex = firstStageClients.indexOf(null)
-
-  if (!cookieParsed.firstStageIndex && ~cliendIndex) {
-    headers.push(
-      `Set-Cookie: ${cookie.serialize("firstStageIndex", cliendIndex, {
-        maxAge: cookieExpires,
-      })}`
-    )
-    webSocketKeyTable[req.headers["sec-websocket-key"]] = cliendIndex
-  }
-})
 
 firstStageSocket.on("connection", function connection(ws, req) {
-  const cookieParsed = cookie.parse(req.headers.cookie || "")
-  let clientIndex
+  const clientIndex = firstStageClients.indexOf(null)
 
-  console.log(cookieParsed)
-
-  if (
-    cookieParsed.firstStageIndex &&
-    !firstStageClients[cookieParsed.firstStageIndex]
-  ) {
-    clientIndex = cookieParsed.firstStageIndex
-    firstStageClients[clientIndex] = ws
-  } else if (
-    webSocketKeyTable[req.headers["sec-websocket-key"]] !== undefined
-  ) {
-    clientIndex = webSocketKeyTable[req.headers["sec-websocket-key"]]
-    firstStageClients[clientIndex] = ws
-    delete webSocketKeyTable[req.headers["sec-websocket-key"]]
-  } else {
-    console.log("terminate")
-    ws.terminate()
-  }
+  firstStageClients[clientIndex] = ws
 
   ws.on("message", (message) => {
-    console.log("message from", clientIndex, message, typeof message)
     let messageParsed
 
     if (message instanceof Buffer) {
@@ -63,11 +26,12 @@ firstStageSocket.on("connection", function connection(ws, req) {
         buffer: message,
         type: "video/webm;codecs=vp8",
       })
-
+      
       lastStageClient && lastStageClient.send(data)
       return
     }
-
+    
+    console.log("message from", clientIndex, message, typeof message)
     try {
       messageParsed = JSON.parse(message)
     } catch (e) {
@@ -83,6 +47,7 @@ firstStageSocket.on("connection", function connection(ws, req) {
   })
 
   ws.on("close", () => {
+    debugger
     console.log("close", clientIndex)
     if (clientIndex !== undefined) firstStageClients[clientIndex] = null
   })
@@ -100,10 +65,6 @@ lastStageSocket.on("connection", function connection(ws) {
         })
       )
   }
-
-  lastStageClient.on("message", (message) => {
-    console.log("get message from last stage client", message)
-  })
 })
 
 timerSocket.on("connection", function connection(ws) {
