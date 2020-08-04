@@ -59,11 +59,12 @@ amountAttemptsEl.text(amountAttempts)
 const mediaList = new MediaList()
 
 emitter.on("createMediaSource", ({ clientIndex }) => {
+  const mediaEmitter = new EventEmitter(new Factory(Event, List))
   const mediaContainer = new MediaContainer(
     new MediaReceiver(),
-    new MediaSourceAdapter(new MediaSource(), emitter),
-    new MediaSourceBuffer(new MediaQueue(), emitter),
-    emitter
+    new MediaSourceAdapter(new MediaSource(), mediaEmitter),
+    new MediaSourceBuffer(new MediaQueue()),
+    mediaEmitter
   )
 
   mediaContainer.init()
