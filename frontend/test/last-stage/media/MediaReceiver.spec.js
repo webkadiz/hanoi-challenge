@@ -83,22 +83,6 @@ describe("MediaReveiver", () => {
     assert.isTrue(attachSrcObjectSpy.threw("Error"))
   })
 
-  it("Play video", () => {
-    // Arrange
-    HTMLVideoElement.prototype.play = () => {}
-    $("body").append("<video></video>")
-    const mediaReceiver = new MediaReceiver()
-    const srcObject = {}
-    const playSpy = sinon.spy($("video").get(0), "play")
-
-    // Act
-    mediaReceiver.prepareVideoEl()
-    mediaReceiver.playVideo()
-
-    // Assert
-    assert.isTrue(playSpy.called)
-  })
-
   it("Play video without prepare", () => {
     // Arrange
     HTMLVideoElement.prototype.play = () => {}
