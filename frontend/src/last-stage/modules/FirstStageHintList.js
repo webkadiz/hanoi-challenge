@@ -16,7 +16,7 @@ export default class FirstStageHintList {
 
   fill() {
     for (const number of range(this._amountHints)) {
-      this._list[number] = new FirstStageHint(number).activate()
+      this._list[number] = new FirstStageHint(number, this.emitter).activate()
     }
   }
 

@@ -1,8 +1,8 @@
 import $ from "jquery"
-import { init } from "./firework/firework"
 
 export default class FirstStageHint {
-  constructor(number) {
+  constructor(number, emitter) {
+    this.emitter = emitter
     this._gameResult = null
     this._number = number
     this._flipButtonElement = $(".flip-btn").eq(number)
