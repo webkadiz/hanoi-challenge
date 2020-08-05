@@ -8,7 +8,7 @@ import LastStageGame from "./modules/LastStageGame"
 import GameLogic from "./modules/GameLogic"
 import FirstStageHintList from "./modules/FirstStageHintList"
 import ServerEventsProvider from "./modules/ServerEventsProvider"
-import SocketManager from "../first-stage/classes/SocketManager"
+import SocketManager from "../common/SocketManager"
 import MediaList from "./modules/media/MediaList"
 import FireworkAdapter from "./modules/FireworkAdapter"
 

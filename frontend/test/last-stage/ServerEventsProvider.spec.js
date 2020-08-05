@@ -1,6 +1,6 @@
 import { assert } from "chai"
-import ServerEventsProvider from "@/last-stage/modules/ServerEventsProvider"
-import SocketManager from "@/first-stage/classes/SocketManager"
+import ServerEventsProvider from "../../src/last-stage/modules/ServerEventsProvider"
+import SocketManager from "../../src/common/SocketManager"
 import { EventEmitter, Factory, Event, List } from "@webkadiz/event-emitter"
 
 describe("ServerEventsProvider", () => {

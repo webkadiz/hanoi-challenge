@@ -1,5 +1,5 @@
 import { assert } from "chai"
-import SocketManager from "../../src/first-stage/classes/SocketManager.js"
+import SocketManager from "../src/common/SocketManager"
 import WebSocket from "ws"
 import { EventEmitter, Factory, Event, List } from "@webkadiz/event-emitter"
 
