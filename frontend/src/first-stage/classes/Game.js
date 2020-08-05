@@ -73,8 +73,6 @@ export default class Game {
     this.initScore()
 
     this.initBestScore()
-
-    this.setReserveStartGame()
   }
 
   computeValuesDependOnAmountRings() {
@@ -173,17 +171,6 @@ export default class Game {
     return this.score === this.bestScore ? 1 : 0
   }
 
-  setReserveStartGame() {
-    const self = this
-
-    $(window).on("keyup", function handleKeyUp(e) {
-      if (e.ctrlKey && e.shiftKey && e.key === "F12") {
-        self.startGame()
-        $(window).off("keyup", handleKeyUp)
-      }
-    })
-  }
-
   startGame() {
     this.map.overlay.effect("blind", {}, 2000, () => {
       $(window).on("keyup", this.handleControl.bind(this))
@@ -215,8 +202,6 @@ export default class Game {
       gameOver: result,
       additionalScore,
     })
-
-    this.gameOver = true
   }
 
   checkVictory() {
