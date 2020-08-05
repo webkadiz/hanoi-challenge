@@ -18,6 +18,7 @@ export default class FirstStageHint {
   }
 
   reload() {
+    this._cardElement.removeClass("flip")
     this._flipButtonElement.off()
     this.init()
   }
