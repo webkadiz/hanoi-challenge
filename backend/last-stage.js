@@ -6,4 +6,4 @@ lastStageSocket.on("connection", (ws) => {
   module.exports.lastStageClient = ws
 })
 
-module.exports.lastStageSocket = lastStageSocket 
+module.exports.lastStageSocket = lastStageSocket

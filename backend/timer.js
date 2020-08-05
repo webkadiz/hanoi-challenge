@@ -1,7 +1,7 @@
 const WebSocket = require("ws")
 const sendMsg = require("./sendMsg")
 const { firstStageClients } = require("./first-stage")
- 
+
 const timerSocket = new WebSocket.Server({ noServer: true })
 
 timerSocket.on("connection", (ws) => {

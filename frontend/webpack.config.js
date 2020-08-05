@@ -7,7 +7,7 @@ module.exports = {
     "first-stage": "./src/first-stage/first-stage.js",
     "last-stage": "./src/last-stage/last-stage.js",
     timer: "./src/timer/timer.js",
-    "command-center": "./src/command-center/command-center.js"
+    "command-center": "./src/command-center/command-center.js",
   },
   output: {
     filename: "[name].js",

@@ -18,7 +18,7 @@ export default class Timer {
 
     let curTime = this.beginTime
     this.inWork = true
-    
+
     this.timer = setInterval(() => {
       curTime -= 1
       const strTime = this.strFromTime(curTime)

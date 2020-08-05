@@ -44,5 +44,5 @@ firstStageSocket.on("connection", (ws) => {
   })
 })
 
-module.exports.firstStageSocket = firstStageSocket 
+module.exports.firstStageSocket = firstStageSocket
 module.exports.firstStageClients = firstStageClients
