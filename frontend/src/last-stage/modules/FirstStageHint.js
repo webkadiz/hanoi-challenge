@@ -43,7 +43,7 @@ export default class FirstStageHint {
   }
 
   showFlipButtonElement() {
-    this._flipButtonElement.fadeIn(1000)
+    this._flipButtonElement.fadeIn()
   }
 
   hideFlipButtonElement() {
