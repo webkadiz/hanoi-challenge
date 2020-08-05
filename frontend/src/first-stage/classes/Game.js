@@ -178,10 +178,20 @@ export default class Game {
   }
 
   reloadGame() {
+    this.amountRings = -1
+    this.activeRing = new ActiveRing()
+    this.rodContainer = Array(3).fill(0)
+    this.rodIndex = 0
+    this.rememberRodIndex = 0
+    this.isGameOver = false
+
     this.levelManager.showScreen()
 
+    $(".win").removeClass("active")
+    $(".lose").removeClass("active")
     $(".ring").remove()
-    $(".overlay").show()
+    this.map.overlay.show()
+    this.map.glows.removeClass("active")
     $(window).off("keyup")
   }
 
@@ -191,6 +201,7 @@ export default class Game {
 
   gameOver(result) {
     if (this.isGameOver) return
+    this.isGameOver = true
 
     const additionalScore = this.getAdditionalScore()
 
