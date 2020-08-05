@@ -43,9 +43,10 @@ export default class GameManager {
   }
 
   socketMessage(incomingData) {
-    if (incomingData.reload) {
+    console.log(incomingData)
+    if (incomingData === "reload") {
       this.game.reloadGame()
-    } else if (incomingData.timer === "start") {
+    } else if (incomingData === "start") {
       this.game.startGame()
     } else if (incomingData.timer === "stop") {
       this.game.stopGame()
