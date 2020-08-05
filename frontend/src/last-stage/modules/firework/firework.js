@@ -1225,8 +1225,6 @@ function colorSky(speed) {
   }, ${currentSkyColor.g | 0}, ${currentSkyColor.b | 0})`
 }
 
-
-
 // Helper used to semi-randomly spread particles over an arc
 // Values are flexible - `start` and `arcLength` can be negative, and `randomness` is simply a multiplier for random addition.
 function createParticleArc(

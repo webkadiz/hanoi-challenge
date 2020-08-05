@@ -193,9 +193,9 @@ export default class Game {
   reloadGame() {
     this.levelManager.showScreen()
 
-    $('.ring').remove()
-    $('.overlay').show()
-    $(window).off('keyup')
+    $(".ring").remove()
+    $(".overlay").show()
+    $(window).off("keyup")
   }
 
   stopGame() {

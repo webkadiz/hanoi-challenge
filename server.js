@@ -26,11 +26,11 @@ firstStageSocket.on("connection", function connection(ws, req) {
         buffer: message,
         type: "video/webm;codecs=vp8",
       })
-      
+
       lastStageClient && lastStageClient.send(data)
       return
     }
-    
+
     console.log("message from", clientIndex, message, typeof message)
     try {
       messageParsed = JSON.parse(message)

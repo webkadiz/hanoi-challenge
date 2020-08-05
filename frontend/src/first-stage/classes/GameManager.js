@@ -23,6 +23,7 @@ export default class GameManager {
       "videoStreamDataAvailable",
       this.videoStreamDataAvailable.bind(this)
     )
+    this.emitter.on("gameOver", this.gameOver.bind(this))
 
     this.socketManager.setHandlers()
     this.injectorArrayMethods.inject()
@@ -42,7 +43,6 @@ export default class GameManager {
   }
 
   socketMessage(incomingData) {
-    console.log("income", incomingData)
     if (incomingData.reload) {
       this.game.reloadGame()
     } else if (incomingData.timer === "start") {
@@ -58,6 +58,10 @@ export default class GameManager {
   }
 
   videoStreamDataAvailable(data) {
+    this.socketManager.send(data)
+  }
+
+  gameOver(data) {
     this.socketManager.send(data)
   }
 }
