@@ -23,5 +23,5 @@ export function float(num) {
 }
 
 export function createWebSocket(route) {
-  return new WebSocket(`ws://localhost:8081/${route}`)
+  return new WebSocket(`ws://${location.host}/${route}`)
 }
