@@ -1,11 +1,15 @@
 const http = require("http")
 const url = require("url")
+const express = require("express")
+const app = express()
+const path = require("path")
 const { firstStageSocket } = require("./first-stage")
 const { lastStageSocket } = require("./last-stage")
 const { timerSocket } = require("./timer")
 const { commandCenterSocket } = require("./command-center")
 
-const server = http.createServer()
+app.use(express.static(path.resolve("../static")))
+const server = app.listen(8081)
 
 server.on("upgrade", function upgrade(request, socket, head) {
   const pathname = url.parse(request.url).pathname
@@ -32,5 +36,3 @@ server.on("upgrade", function upgrade(request, socket, head) {
     socket.destroy()
   }
 })
-
-server.listen(8081)
