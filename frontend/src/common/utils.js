@@ -18,10 +18,6 @@ export function range(start, end = null, step = null) {
   return array
 }
 
-export function print(...entity) {
-  console.log(...entity)
-}
-
 export function float(num) {
   return parseFloat(num)
 }
