@@ -58,9 +58,9 @@ export default class LastStage {
     this.mediaList.eq(clientIndex).appendBufferToMediaSourceBuffer(buffer)
   }
 
-  handleFirstStageGameOver({ result, additionalScore, clientIndex }) {
+  handleFirstStageGameOver({ gameOver, additionalScore, clientIndex }) {
     this.lastStageGame.handleFirstStageGameOver(additionalScore)
-    this.firstStageHintList.eq(clientIndex).handleFirstStageGameOver(result)
+    this.firstStageHintList.eq(clientIndex).handleFirstStageGameOver(gameOver)
   }
 
   reloadStage() {
