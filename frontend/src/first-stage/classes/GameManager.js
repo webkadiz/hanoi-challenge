@@ -48,7 +48,7 @@ export default class GameManager {
       this.game.reloadGame()
     } else if (incomingData === "start") {
       this.game.startGame()
-    } else if (incomingData.timer === "stop") {
+    } else if (incomingData === "stop") {
       this.game.stopGame()
     }
   }
