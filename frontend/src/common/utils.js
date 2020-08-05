@@ -25,3 +25,7 @@ export function print(...entity) {
 export function float(num) {
   return parseFloat(num)
 }
+
+export function createWebSocket(route) {
+  return new WebSocket(`ws://localhost:8081/${route}`)
+}
