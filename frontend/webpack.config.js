@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const CopyPlugin = require("copy-webpack-plugin")
 const WriteFilePlugin = require("write-file-webpack-plugin")
+const path = require("path")
 
 module.exports = {
   entry: {
@@ -11,7 +12,7 @@ module.exports = {
   },
   output: {
     filename: "[name].js",
-    path: __dirname + "/dist/",
+    path: path.resolve(__dirname, "../static"),
   },
 
   module: {
