@@ -5,6 +5,8 @@ import "jquery-ui/ui/effects/effect-explode.js"
 
 import { range } from "@/common/utils"
 
+import { init as fireworkInit, reload as fireworkReload } from './modules/firework'
+
 import ServerEventsProvider from "./modules/ServerEventsProvider"
 import SocketManager from "../first-stage/classes/SocketManager"
 import { EventEmitter, Factory, Event, List } from "@webkadiz/event-emitter"
@@ -175,9 +177,15 @@ function gameOver() {
       scoreEl.text(gameScore)
       scoreEl.addClass("animation")
 
-      setTimeout(() => import("./modules/firework.js"), 4500)
+      setTimeout(() => {
+        fireworkInit()
+      }, 4500)
     }, 4000)
   }, 1000)
+}
+
+function reloadStage() {
+  fireworkReload()
 }
 
 function gradientAnimation() {

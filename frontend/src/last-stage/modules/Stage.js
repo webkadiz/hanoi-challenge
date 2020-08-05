@@ -39,7 +39,6 @@ const Ticker = (function TickerFactory(window) {
   "use strict"
 
   const Ticker = {}
-
   // public
   // will call function reference repeatedly once registered, passing elapsed time and a lag multiplier as parameters
   Ticker.addListener = function addListener(callback) {
@@ -53,6 +52,10 @@ const Ticker = (function TickerFactory(window) {
       started = true
       queueFrame()
     }
+  }
+
+  Ticker.removeListener = function removeListener() {
+    listeners.pop()
   }
 
   // private
@@ -406,6 +409,12 @@ const Stage = (function StageFactory(window, document, Ticker) {
       }
     } catch (e) {
       throw "Invalid Event"
+    }
+  }
+
+  Stage.prototype.removeEventListener = function removeEventListener(event) {
+    if (event === "ticker") {
+      Ticker.removeListener()
     }
   }
 

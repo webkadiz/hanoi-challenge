@@ -571,6 +571,8 @@ const shellNames = Object.keys(shellTypes)
 function init() {
   // Populate dropdowns
   // shell type
+  mainStage.addEventListener("ticker", update) // start firework
+
   let options = ""
   shellNames.forEach(
     (opt) => (options += `<option value="${opt}">${opt}</option>`)
@@ -610,6 +612,16 @@ function init() {
 
   // Apply initial config
   configDidUpdate()
+}
+
+function reload() {
+  mainStage.removeEventListener("ticker")
+
+  Spark._pool = []
+  Spark.active = createParticleCollection()
+  Star._pool = []
+  Star.active = createParticleCollection()
+  BurstFlash._pool = []
 }
 
 function fitShellPositionInBoundsH(position) {
@@ -1213,7 +1225,7 @@ function colorSky(speed) {
   }, ${currentSkyColor.g | 0}, ${currentSkyColor.b | 0})`
 }
 
-mainStage.addEventListener("ticker", update)
+
 
 // Helper used to semi-randomly spread particles over an arc
 // Values are flexible - `start` and `arcLength` can be negative, and `randomness` is simply a multiplier for random addition.
@@ -1707,4 +1719,4 @@ const Spark = {
   },
 }
 
-export { init }
+export { init, reload }
