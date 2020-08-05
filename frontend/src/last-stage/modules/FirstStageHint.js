@@ -65,9 +65,8 @@ export default class FirstStageHint {
   }
 
   setImage() {
-    $(".last-stage-img").css(
-      "background-image",
-      `url(static/${this._number}.jpg)`
-    )
+    $(".last-stage-img")
+      .eq(this._number)
+      .css("background-image", `url(static/${this._number}.jpg)`)
   }
 }
