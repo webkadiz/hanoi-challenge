@@ -3,6 +3,7 @@ import "jquery-ui/ui/effects/effect-clip.js"
 import "jquery-ui/ui/effects/effect-explode.js"
 
 import { EventEmitter, Factory, Event, List } from "@webkadiz/event-emitter"
+import { createWebSocket } from "../common/utils"
 import LastStage from "./modules/LastStage"
 import LastStageGame from "./modules/LastStageGame"
 import GameLogic from "./modules/GameLogic"
@@ -18,7 +19,7 @@ const last = new LastStage(
   new LastStageGame(new GameLogic(emitter), emitter),
   new FirstStageHintList(emitter),
   new ServerEventsProvider(
-    new SocketManager(new WebSocket("ws://localhost:8081/last-stage"), emitter),
+    new SocketManager(createWebSocket("last-stage"), emitter),
     emitter
   ),
   new MediaList(),

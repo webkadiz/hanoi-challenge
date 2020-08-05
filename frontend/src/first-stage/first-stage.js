@@ -4,6 +4,7 @@ import "jquery-ui/ui/effects/effect-blind"
 
 import $ from "jquery"
 import { EventEmitter, Event, Factory, List } from "@webkadiz/event-emitter"
+import { createWebSocket } from "../common/utils"
 import GameManager from "./classes/GameManager"
 import Game from "./classes/Game"
 import LevelManger from "./classes/LevelManager"
@@ -21,7 +22,7 @@ new GameManager(
     new GameMap(),
     emitter
   ),
-  new SocketManager(new WebSocket("ws://localhost:8081/first-stage"), emitter),
+  new SocketManager(createWebSocket("first-stage"), emitter),
   new VideoStreamManager(emitter),
   new Snowfall(".snowfall"),
   new InjectorArrayMethods(),
