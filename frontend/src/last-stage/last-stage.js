@@ -16,7 +16,7 @@ const emitter = new EventEmitter(new Factory(Event, List))
 
 const last = new LastStage(
   new LastStageGame(new GameLogic(emitter), emitter),
-  new FirstStageHintList(),
+  new FirstStageHintList(emitter),
   new ServerEventsProvider(
     new SocketManager(new WebSocket("ws://localhost:8081/last-stage"), emitter),
     emitter
