@@ -54,6 +54,7 @@ export default class LastStage {
   }
 
   appendBuffer({ buffer, clientIndex }) {
+    if (!this.mediaList.eq(clientIndex)) return
     this.mediaList.eq(clientIndex).appendBufferToMediaSourceBuffer(buffer)
   }
 
