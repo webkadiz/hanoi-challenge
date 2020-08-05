@@ -7,6 +7,7 @@ module.exports = {
     "first-stage": "./src/first-stage/first-stage.js",
     "last-stage": "./src/last-stage/last-stage.js",
     timer: "./src/timer/timer.js",
+    "command-center": "./src/command-center/command-center.js"
   },
   output: {
     filename: "[name].js",
@@ -63,6 +64,12 @@ module.exports = {
       filename: "timer.html",
       chunks: ["timer"],
     }),
+    new HtmlWebpackPlugin({
+      template: "./src/command-center/command-center.html",
+      filename: "command-center.html",
+      chunks: ["command-center"],
+    }),
+
     new CopyPlugin([{ from: "src/static", to: "static" }]),
     new WriteFilePlugin(),
   ],
