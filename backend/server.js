@@ -9,6 +9,7 @@ const { timerSocket } = require("./timer")
 const { commandCenterSocket } = require("./command-center")
 
 app.use(express.static(path.resolve("../static")))
+
 const server = app.listen(8081)
 
 server.on("upgrade", function upgrade(request, socket, head) {
