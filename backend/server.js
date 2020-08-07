@@ -8,7 +8,7 @@ const { lastStageSocket } = require("./last-stage")
 const { timerSocket } = require("./timer")
 const { commandCenterSocket } = require("./command-center")
 
-app.use(express.static(path.resolve("../static")))
+app.use(express.static(path.resolve("../build")))
 
 const server = app.listen(8081)
 
