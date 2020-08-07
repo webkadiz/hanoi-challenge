@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="grid">
+      <div class="ceil">
+        <div class="card">
+          <div class="front">
+            <video src=""></video>
+            <div class="flip-box">
+              <button class="flip-btn"></button>
+            </div>
+          </div>
+          <div class="back">
+            <div class="last-stage-img"></div>
+          </div>
+        </div>
+      </div>
+      <div class="ceil">
+        <div class="card">
+          <div class="front">
+            <video src=""></video>
+            <div class="flip-box">
+              <button class="flip-btn"></button>
+            </div>
+          </div>
+          <div class="back">
+            <div class="last-stage-img"></div>
+          </div>
+        </div>
+      </div>
+      <div class="ceil">
+        <div class="card">
+          <div class="front">
+            <video src=""></video>
+            <div class="flip-box">
+              <button class="flip-btn"></button>
+            </div>
+          </div>
+          <div class="back">
+            <div class="last-stage-img"></div>
+          </div>
+        </div>
+      </div>
+      <div class="ceil">
+        <div class="card">
+          <div class="front">
+            <video src=""></video>
+            <div class="flip-box">
+              <button class="flip-btn"></button>
+            </div>
+          </div>
+          <div class="back">
+            <div class="last-stage-img"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="last-stage">
+      <div class="last-stage-attempts">
+        попыток осталось: <span class="last-stage-attempts__amount"></span>
+      </div>
+      <div class="last-stage-input">
+        <div class="last-stage-input__item"></div>
+        <div class="last-stage-input__item"></div>
+        <div class="last-stage-input__item"></div>
+        <div class="last-stage-input__item"></div>
+        <div class="last-stage-input__item"></div>
+      </div>
+    </div>
+
+    <div class="game-over-screen">
+      <div class="game-over-score"></div>
+    </div>
+
+    <div class="score"></div>
+
+    <div class="container">
+      <div id="loading-init">Loading...</div>
+      <div id="stage-container" class="remove">
+        <div id="canvas-container">
+          <canvas id="trails-canvas"></canvas>
+          <canvas id="main-canvas"></canvas>
+        </div>
+        <div id="controls">
+          <div id="pause-btn" class="btn">
+            <svg fill="white" width="24" height="24">
+              <use href="#icon-pause" xlink:href="#icon-pause"></use>
+            </svg>
+          </div>
+          <div id="shutter-btn" class="btn">
+            <svg fill="white" width="24" height="24">
+              <use
+                href="#icon-shutter-slow"
+                xlink:href="#icon-shutter-slow"
+              ></use>
+            </svg>
+          </div>
+          <div id="settings-btn" class="btn">
+            <svg fill="white" width="24" height="24">
+              <use href="#icon-settings" xlink:href="#icon-settings"></use>
+            </svg>
+          </div>
+        </div>
+        <div id="menu" class="hide">
+          <div id="close-menu-btn" class="btn btn--bright">
+            <svg fill="white" width="24" height="24">
+              <use href="#icon-close" xlink:href="#icon-close"></use>
+            </svg>
+          </div>
+          <div id="menu__header">Settings</div>
+          <form>
+            <div class="form-option form-option--select">
+              <label>Shell Type</label>
+              <select id="shell-type"></select>
+            </div>
+            <div class="form-option form-option--select">
+              <label>Shell Size</label>
+              <select id="shell-size"></select>
+            </div>
+            <div class="form-option form-option--checkbox">
+              <label id="auto-launch-label"
+                ><input id="auto-launch" type="checkbox" /><span
+                  >Auto Fire</span
+                ></label
+              >
+            </div>
+            <div class="form-option form-option--checkbox">
+              <label id="finale-mode-label"
+                ><input id="finale-mode" type="checkbox" /><span
+                  >Finale Mode</span
+                ></label
+              >
+            </div>
+            <div class="form-option form-option--checkbox">
+              <label id="hide-controls-label"
+                ><input id="hide-controls" type="checkbox" /><span
+                  >Hide Controls</span
+                ></label
+              >
+            </div>
+            <div class="form-option form-option--select">
+              <label>Quality</label>
+              <select id="quality-ui"></select>
+            </div>
+            <div class="form-option form-option--select">
+              <label>Sky Lighting</label>
+              <select id="sky-lighting"></select>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  <script type="text/javascript" src="last-stage.js"></script></body>
+</html>
