@@ -110,7 +110,6 @@ const store = {
             "Version switch should be exhaustive. Falling back to default settings."
           )
       }
-      console.log(`Loaded config (schema version ${schemaVersion})`)
     }
     // Deprecated data format. Apply carefully (it's not namespaced).
     else if (localStorage.getItem("schemaVersion") === "1") {
@@ -123,7 +122,6 @@ const store = {
         hideControls =
           typeof hideControlsRaw === "string" && JSON.parse(hideControlsRaw)
       } catch (e) {
-        console.log("Recovered from error parsing saved config:")
         console.error(e)
         return
       }

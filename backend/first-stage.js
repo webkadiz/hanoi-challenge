@@ -7,7 +7,6 @@ const firstStageClients = new Array(4).fill(null)
 firstStageSocket.on("connection", (ws) => {
   const clientIndex = firstStageClients.indexOf(null) // first free cell
   firstStageClients[clientIndex] = ws
-  console.log(clientIndex)
 
   ws.on("message", (message) => {
     const { lastStageClient } = require("./last-stage")
@@ -24,7 +23,6 @@ firstStageSocket.on("connection", (ws) => {
       return
     }
 
-    console.log("message from", clientIndex, message, typeof message)
     try {
       messageParsed = JSON.parse(message)
     } catch (e) {

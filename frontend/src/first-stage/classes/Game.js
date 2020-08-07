@@ -92,8 +92,6 @@ export default class Game {
 
   computeDimensionsGlow() {
     for (const i of range(3)) {
-      console.log("for")
-      console.log(this.map.glows)
       this.map.glows.eq(i).css("width", this.glowWidth)
       this.map.glows
         .eq(i)
@@ -153,8 +151,6 @@ export default class Game {
     this.map.glows.eq(this.rodIndex).removeClass("active")
 
     this.rodIndex = this.rodIndex === 2 ? 2 : this.rodIndex + 1
-
-    console.log(this.map.glows.eq(this.rodIndex))
 
     this.map.glows.eq(this.rodIndex).addClass("active")
   }

@@ -43,7 +43,6 @@ export default class GameManager {
   }
 
   socketMessage(incomingData) {
-    console.log(incomingData)
     if (incomingData === "reload") {
       this.game.reloadGame()
     } else if (incomingData === "start") {
