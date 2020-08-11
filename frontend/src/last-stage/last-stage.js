@@ -15,7 +15,7 @@ import FireworkAdapter from "./modules/FireworkAdapter"
 
 const emitter = new EventEmitter(new Factory(Event, List))
 
-const last = new LastStage(
+new LastStage(
   new LastStageGame(new GameLogic(emitter), emitter),
   new FirstStageHintList(emitter),
   new ServerEventsProvider(
